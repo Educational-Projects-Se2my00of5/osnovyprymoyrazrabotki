@@ -1,0 +1,30 @@
+services:
+  front:
+    build: ./front
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front:/app      # монтируем код для hot-reload
+      - /app/node_modules     # чтобы node_modules не затирался
+    environment:
+      - REACT_APP_API_URL=http://host.docker.internal:8080
+      - CHOKIDAR_USEPOLLING=true  # полезно для hot reload внутри Docker
+    stdin_open: true
+    tty: true
+
+
+  postgres_project_db:
+    image: postgres:17-alpine3.22
+    container_name: postgres_project_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=project-db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - "5432:5432" # 5432 - может быть занят
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
