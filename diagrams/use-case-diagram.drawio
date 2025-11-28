@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Use Case Diagram" id="use-case-diagram">
-        <mxGraphModel dx="2623" dy="662" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1773" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -146,7 +146,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="43" value="Добавить/удалить участников" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="270" y="840" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-580" y="900" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="44" value="В проектах все являются админами" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=9;verticalAlign=top;align=center;" parent="1" vertex="1">
                     <mxGeometry x="-40" y="170" width="100" height="70" as="geometry"/>
@@ -157,10 +157,10 @@
                         <mxPoint x="150" y="420" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="49" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="uc-delete-project" target="43" edge="1">
+                <mxCell id="49" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="60" target="43" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="90" y="441" as="sourcePoint"/>
-                        <mxPoint x="304" y="663" as="targetPoint"/>
+                        <mxPoint x="-529.9976199376459" y="1016.1277019412746" as="sourcePoint"/>
+                        <mxPoint x="-326.59000000000003" y="883" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="50" value="Создать проект" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
@@ -170,12 +170,6 @@
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="90" y="441" as="sourcePoint"/>
                         <mxPoint x="304" y="663" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="52" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="50" target="43" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="309" y="718" as="sourcePoint"/>
-                        <mxPoint x="262" y="779" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="53" value="Изменить статус" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
@@ -223,15 +217,6 @@
                 <mxCell id="65" value="Просмотреть список результатов участника" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
                     <mxGeometry x="-550" y="1120" width="130" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="66" value="Удалить участника" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-560" y="900" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="67" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="19" target="66" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-179" y="816" as="sourcePoint"/>
-                        <mxPoint x="-401" y="1014" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
                 <mxCell id="68" value="Изменить роль(суффикс к имени) участника" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
                     <mxGeometry x="-690" y="1076.5" width="120" height="60" as="geometry"/>
                 </mxCell>
@@ -262,7 +247,7 @@
                         <mxPoint x="181" y="1234" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="74" value="Просмотреть список задач" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                <mxCell id="74" value="Просмотреть список результатов" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
                     <mxGeometry x="-230" y="900" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="75" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="19" target="74" edge="1">

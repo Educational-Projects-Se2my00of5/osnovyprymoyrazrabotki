@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -34,5 +35,12 @@ public class ProjectController {
     public ProjectDto.ProjectSummary createProject(@RequestHeader("Authorization") String authHeader,
                                                    @RequestBody @Valid ProjectDto.CreateRequest request) {
         return projectService.createProject(authHeader, request);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProjectDto.ProjectDetails getProject(@RequestHeader("Authorization") String authHeader,
+                                                @PathVariable("id") Long id) {
+        return projectService.getProjectDetails(authHeader, id);
     }
 }

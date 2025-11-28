@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getProfile, updateProfile, getProjects, createProject, getTaskStats } from '../api';
 import './Dashboard.css';
 
@@ -119,9 +120,10 @@ function Dashboard({ onLogout }) {
     }
   };
 
+  const navigate = useNavigate();
   const handleProjectClick = (projectId) => {
-    // Заглушка: здесь будет переход на страницу проекта
-    alert(`Переход к проекту ID: ${projectId}`);
+    // navigate to project page
+    navigate(`/projects/${projectId}`);
   };
 
   return (
@@ -345,6 +347,7 @@ function Dashboard({ onLogout }) {
           </div>
         </div>
       )}
+      
     </div>
   );
 }

@@ -18,3 +18,28 @@ export function ProjectSummaryDto(data) {
         createdAt: data.createdAt,
     };
 }
+
+export function TeamMemberInfoDto(data) {
+    if (!data) return null;
+    return {
+        id: data.id,
+        userId: data.userId,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        role: data.role,
+    };
+}
+
+export function ProjectDetailsDto(data) {
+    if (!data) return null;
+    return {
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        subjectName: data.subjectName,
+        status: data.status,
+        createdAt: data.createdAt,
+        members: Array.isArray(data.members) ? data.members.map(TeamMemberInfoDto) : [],
+        myRole: data.myRole,
+    };
+}

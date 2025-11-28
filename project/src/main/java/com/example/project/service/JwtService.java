@@ -128,11 +128,4 @@ public class JwtService {
         }
         return authHeader.substring(7);
     }
-
-    /**
-     * Извлечение даты истечения
-     */
-    private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
 }

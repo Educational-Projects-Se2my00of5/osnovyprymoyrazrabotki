@@ -4,6 +4,8 @@ import com.example.project.dto.ProjectDto;
 import com.example.project.entity.Project;
 import com.example.project.entity.TeamMember;
 import com.example.project.entity.User;
+import com.example.project.exception.ForbiddenException;
+import com.example.project.exception.NotFoundException;
 import com.example.project.repository.ProjectRepository;
 import com.example.project.repository.TeamMemberRepository;
 import com.example.project.repository.UserRepository;
@@ -73,5 +75,43 @@ public class ProjectService {
                 .role(member.getRole())
                 .createdAt(saved.getCreatedDate())
                 .build();
+    }
+
+    public ProjectDto.ProjectDetails getProjectDetails(String authHeader, Long projectId) {
+        var opt = projectRepository.findById(projectId);
+        if (opt.isEmpty()) return null;
+
+        var project = opt.get();
+
+        String myRole = null;
+        String email = jwtService.extractEmailFromHeader(authHeader);
+        var user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        
+        var membership = teamMemberRepository.findByUserAndProject(user, project);
+        if (membership.isPresent()) myRole = membership.get().getRole();
+        else throw new ForbiddenException("Пользователь не является участником проекта");
+
+        var members = project.getTeamMembers().stream().map(m -> {
+            var u = m.getUser();
+            return ProjectDto.TeamMemberInfo.builder()
+                    .id(m.getId())
+                    .userId(u.getId())
+                    .firstName(u.getFirstName())
+                    .lastName(u.getLastName())
+                    .role(m.getRole())
+                    .build();
+        }).toList();
+
+        return ProjectDto.ProjectDetails.builder()
+            .id(project.getId())
+            .name(project.getName())
+            .description(project.getDescription())
+            .subjectName(project.getSubjectName())
+            .status(project.getStatus() != null ? project.getStatus().name() : null)
+            .createdAt(project.getCreatedDate())
+            .members(members)
+            .myRole(myRole)
+            .build();
     }
 }
