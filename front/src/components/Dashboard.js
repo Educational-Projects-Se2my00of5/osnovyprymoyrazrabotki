@@ -8,6 +8,7 @@ function Dashboard({ onLogout }) {
   const [error, setError] = useState('');
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedProfile, setEditedProfile] = useState({ firstName: '', lastName: '' });
+  const [modalError, setModalError] = useState('');
 
   // Заглушки данных (пока нет бэкенда)
   const [projects] = useState([
@@ -21,6 +22,7 @@ function Dashboard({ onLogout }) {
   });
 
   const [newProject, setNewProject] = useState({ name: '', description: '', subjectName: '' });
+  const [createMessage, setCreateMessage] = useState({ type: '', text: '' });
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -39,13 +41,18 @@ function Dashboard({ onLogout }) {
   const handleCreateProject = (e) => {
     e.preventDefault();
     // Заглушка: здесь будет вызов API для создания проекта
-    alert(`Создан проект: ${newProject.name} (${newProject.subjectName})`);
+    if (!newProject.name.trim()) {
+      setCreateMessage({ type: 'error', text: 'Название проекта обязательно' });
+      return;
+    }
+    setCreateMessage({ type: 'success', text: `Создан проект: ${newProject.name}` });
     setNewProject({ name: '', description: '', subjectName: '' });
   };
 
   const handleOpenEditModal = () => {
     if (profile) {
       setEditedProfile({ firstName: profile.firstName, lastName: profile.lastName });
+      setModalError('');
       setIsEditModalOpen(true);
     }
   };
@@ -65,8 +72,9 @@ function Dashboard({ onLogout }) {
       });
       setProfile(updated);
       setIsEditModalOpen(false);
+      setModalError('');
     } catch (err) {
-      alert(err.message || 'Не удалось обновить профиль');
+      setModalError(err.message || 'Не удалось обновить профиль');
     } finally {
       setLoading(false);
     }
@@ -230,6 +238,11 @@ function Dashboard({ onLogout }) {
               <button type="submit" className="dashboard-create-button">
                 Создать проект
               </button>
+              {createMessage.text && (
+                <div className={`dashboard-create-message ${createMessage.type === 'error' ? 'error' : 'success'}`}>
+                  {createMessage.text}
+                </div>
+              )}
             </form>
           </div>
         </div>
@@ -264,6 +277,7 @@ function Dashboard({ onLogout }) {
                   className="dashboard-input"
                 />
               </div>
+              {modalError && <div className="modal-error">{modalError}</div>}
               <div className="modal-buttons">
                 <button type="button" onClick={handleCloseEditModal} className="modal-cancel-button">
                   Отмена
