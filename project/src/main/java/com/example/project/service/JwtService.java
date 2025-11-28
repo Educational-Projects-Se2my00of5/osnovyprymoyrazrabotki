@@ -19,7 +19,6 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.function.Function;
 
-
 @Slf4j
 @Service
 public class JwtService {
@@ -31,8 +30,7 @@ public class JwtService {
     public JwtService(
             @Value("${jwt.secret}") String secret,
             @Value("${jwt.expiration}") long accessTokenExpiration,
-            @Value("${jwt.refresh-expiration}") long refreshTokenExpiration
-    ) {
+            @Value("${jwt.refresh-expiration}") long refreshTokenExpiration) {
         this.signingKey = Keys.hmacShaKeyFor(secret.getBytes());
         this.accessTokenExpiration = accessTokenExpiration;
         this.refreshTokenExpiration = refreshTokenExpiration;
@@ -54,16 +52,16 @@ public class JwtService {
                     .parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException expEx) {
-            //log.error("Token expired", expEx);
+            // log.error("Token expired", expEx);
             throw new AuthenticationException("Token expired");
         } catch (UnsupportedJwtException unsEx) {
-            //log.error("Unsupported jwt", unsEx);
+            // log.error("Unsupported jwt", unsEx);
             throw new AuthenticationException("Unsupported jwt");
         } catch (MalformedJwtException mjEx) {
-            //log.error("Malformed jwt", mjEx);
+            // log.error("Malformed jwt", mjEx);
             throw new AuthenticationException("Malformed jwt");
         } catch (Exception e) {
-            //log.error("invalid token", e);
+            // log.error("invalid token", e);
             throw new AuthenticationException("invalid token");
         }
     }
@@ -86,7 +84,6 @@ public class JwtService {
         return extractUserIdFromToken(token);
     }
 
-
     private String generateToken(User user, TokenType type) {
         long nowMillis = System.currentTimeMillis();
         long expiration = (type == TokenType.ACCESS) ? accessTokenExpiration : refreshTokenExpiration;
@@ -104,7 +101,6 @@ public class JwtService {
         ACCESS, REFRESH
     }
 
-
     /**
      * Извлечение конкретного claim
      */
@@ -117,16 +113,12 @@ public class JwtService {
      * Извлечение всех claims из токена
      */
     private Claims extractAllClaims(String token) {
-        try {
-            return Jwts.parser()
-                    .verifyWith(signingKey)
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
-        } catch (JwtException | IllegalArgumentException e) {
-            log.error("Ошибка парсинга JWT: {}", e.getMessage());
-            throw new AuthenticationException("Невалидный JWT токен");
-        }
+        isTokenValid(token);
+        return Jwts.parser()
+                .verifyWith(signingKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     /**
@@ -138,9 +130,6 @@ public class JwtService {
         }
         return authHeader.substring(7);
     }
-
-
-
 
     /**
      * Извлечение даты истечения

@@ -1,46 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import { logout as apiLogout } from './api';
+import { clearAuth, getAccessToken, getRefreshToken } from './api/storage';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('login'); // 'login', 'register', 'dashboard'
-  const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'));
-  const [refreshtoken, setRefreshToken] = useState(localStorage.getItem('refreshToken'));
+  const [currentPage, setCurrentPage] = useState('login');
 
   // Проверяем токен при загрузке
   useEffect(() => {
-    const savedAccessToken = localStorage.getItem('accessToken');
-    const savedRefreshToken = localStorage.getItem('refreshToken');
-    if (savedAccessToken && savedRefreshToken) {
+    if (getAccessToken() && getRefreshToken()) {
       try {
-        setAccessToken(savedAccessToken)
-        setRefreshToken(savedRefreshToken)
         setCurrentPage('dashboard');
       } catch (err) {
         console.error('Ошибка восстановления сессии:', err);
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        clearAuth();
       }
     }
   }, []);
 
-  const handleLoginSuccess = (userData, accessToken, refreshToken) => {
-    setUser(userData);
-    setAccessToken(accessToken);
-    setRefreshToken(refreshToken);
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
-    setCurrentPage('dashboard');
-  };
 
   const handleLogout = async () => {
     await apiLogout();
-    setAccessToken(null);
-    setAccessToken(null);
+    clearAuth();
     setCurrentPage('login');
+  };
+
+  const goToDashboard = () => {
+    setCurrentPage('dashboard');
   };
 
   const goToRegister = () => {
@@ -54,22 +43,20 @@ function App() {
   return (
     <div className="App">
       {currentPage === 'login' && (
-        <Login 
-          onLoginSuccess={handleLoginSuccess} 
-          onGoToRegister={goToRegister}
+        <Login
+          goToRegister={goToRegister}
+          goToMain={goToDashboard}
         />
       )}
-      
+
       {currentPage === 'register' && (
-        <Register 
-          onRegisterSuccess={() => setCurrentPage('login')}
-          onGoToLogin={goToLogin}
+        <Register
+          goToLogin={goToLogin}
         />
       )}
-      
+
       {currentPage === 'dashboard' && (
-        <Dashboard 
-          token={accessToken}
+        <Dashboard
           onLogout={handleLogout}
         />
       )}

@@ -1,5 +1,7 @@
 package com.example.project.config;
 
+import com.example.project.entity.User;
+import com.example.project.repository.UserRepository;
 import com.example.project.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -10,29 +12,28 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
-        final String userEmail;
+        String userEmail = null;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -40,23 +41,43 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         jwt = authHeader.substring(7);
-        userEmail = jwtService.extractEmailFromToken(jwt);
+        try {
+            userEmail = jwtService.extractEmailFromToken(jwt);
+        } catch (Exception ex) {
+            // Некорректный/просроченный токен — просто пропускаем фильтр дальше
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            var optional = userRepository.findByEmail(userEmail);
+            if (optional.isPresent()) {
+                User userDetails = optional.get();
 
-            if (jwtService.isTokenValid(jwt)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
-                        userDetails.getAuthorities()
-                );
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
+                        userDetails.getAuthorities());
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+               
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
         filterChain.doFilter(request, response);
     }
+
+    // @Override
+    // protected boolean shouldNotFilter(HttpServletRequest request) throws
+    // ServletException {
+    // // Пропускаем фильтр для публичных (permitAll) endpoint'ов и
+    // preflight-запросов
+    // String path = request.getServletPath();
+    // if ("OPTIONS".equalsIgnoreCase(request.getMethod()))
+    // return true;
+    // return Set.of(
+    // "/api/auth/register",
+    // "/api/auth/login",
+    // "/api/auth/refresh",
+    // "/api/auth/logout").contains(path);
+    // }
 }

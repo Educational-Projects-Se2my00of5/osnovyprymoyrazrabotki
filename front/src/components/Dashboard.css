@@ -30,21 +30,81 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
+  transition: background-color 0.2s;
 }
 
-.dashboard-user-info {
+.dashboard-logout-button:hover {
+  background-color: #c82333;
+}
+
+/* Grid layout: 2 columns on desktop */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.dashboard-left,
+.dashboard-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Responsive: stack vertically on narrow screens */
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section card */
+.dashboard-section {
   background-color: white;
   padding: 25px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
 }
 
-.dashboard-subtitle {
-  margin-top: 0;
+.dashboard-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+  border-bottom: 2px solid #007bff;
+}
+
+.dashboard-section-title {
+  margin: 0;
   color: #333;
   font-size: 20px;
+  
+  padding-bottom: 5px;
+  flex: 1;
+}
+
+.dashboard-edit-button {
+  margin-bottom: 5px;
+  padding: 6px 16px 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.dashboard-edit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Profile info rows */
+.dashboard-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .dashboard-info-row {
@@ -56,37 +116,257 @@
 .dashboard-label {
   font-weight: 600;
   color: #555;
-  min-width: 100px;
+  min-width: 120px;
 }
 
 .dashboard-value {
   color: #333;
 }
 
-.dashboard-section {
-  background-color: white;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.dashboard-section-title {
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 20px;
-}
-
-.dashboard-placeholder {
-  padding: 40px;
-  text-align: center;
-  background-color: #f8f9fa;
+/* Loading/Error states */
+.dashboard-loading,
+.dashboard-error {
+  padding: 15px;
   border-radius: 4px;
-  border: 2px dashed #dee2e6;
+  text-align: center;
+}
+
+.dashboard-loading {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.dashboard-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Table styling */
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.dashboard-table thead {
+  background-color: #f8f9fa;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.dashboard-table th {
+  font-weight: 600;
+  color: #495057;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.dashboard-table td {
+  color: #333;
+}
+
+.dashboard-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Badge for project status */
+.dashboard-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-closed {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Form for creating project */
+.dashboard-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.dashboard-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dashboard-label-form {
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+  margin-right: auto ;
+}
+
+.dashboard-input,
+.dashboard-textarea {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.dashboard-input:focus,
+.dashboard-textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.dashboard-textarea {
+  resize: vertical;
+}
+
+.dashboard-create-button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.dashboard-create-button:hover {
+  background-color: #218838;
 }
 
 .dashboard-placeholder-text {
   color: #6c757d;
   font-size: 16px;
   margin: 0;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Clickable project name */
+.dashboard-project-link {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.dashboard-project-link:hover {
+  color: #0056b3;
+}
+
+/* Modal overlay and content */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+  margin: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #333;
+}
+
+.modal-form {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.modal-cancel-button,
+.modal-save-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.modal-cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.modal-cancel-button:hover {
+  background-color: #5a6268;
+}
+
+.modal-save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.modal-save-button:hover {
+  background-color: #218838;
 }

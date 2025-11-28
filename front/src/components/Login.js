@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { login } from '../api';
 import './Login.css';
+import { setAuthTokens } from '../api/storage';
 
-function Login({ onLoginSuccess, onGoToRegister }) {
+function Login({ goToMain, goToRegister }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -14,10 +15,11 @@ function Login({ onLoginSuccess, onGoToRegister }) {
     setLoading(true);
 
     try {
-      const data = await login(email, password);
-      onLoginSuccess(data.userInfo, data.accessToken);
+      const BothTokensResponseDto = await login(email, password);
+      setAuthTokens(BothTokensResponseDto);
+      goToMain();
     } catch (err) {
-      setError(err.response?.data?.message || 'Ошибка входа. Проверьте email и пароль.');
+      setError(err.message || 'Ошибка входа. Проверьте email и пароль.');
     } finally {
       setLoading(false);
     }
@@ -27,7 +29,7 @@ function Login({ onLoginSuccess, onGoToRegister }) {
     <div className="login-container">
       <div className="login-form-box">
         <h1 className="login-title">Вход в систему</h1>
-        
+
         <form onSubmit={handleSubmit} className="login-form">
           <div className="login-input-group">
             <label className="login-label">Email:</label>
@@ -55,8 +57,8 @@ function Login({ onLoginSuccess, onGoToRegister }) {
 
           {error && <div className="login-error">{error}</div>}
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={loading}
             className="login-button"
           >
@@ -67,8 +69,8 @@ function Login({ onLoginSuccess, onGoToRegister }) {
         <div className="login-footer">
           <p className="login-footer-text">
             Нет аккаунта?{' '}
-            <button 
-              onClick={onGoToRegister}
+            <button
+              onClick={goToRegister}
               className="login-link"
             >
               Зарегистрироваться

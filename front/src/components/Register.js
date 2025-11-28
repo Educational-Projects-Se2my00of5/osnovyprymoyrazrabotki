@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { register } from '../api';
 import './Register.css';
 
-function Register({ onRegisterSuccess, onGoToLogin }) {
+function Register({ goToLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -18,9 +18,9 @@ function Register({ onRegisterSuccess, onGoToLogin }) {
     try {
       await register(email, password, firstName, lastName);
       alert('Регистрация успешна! Теперь вы можете войти.');
-      onRegisterSuccess();
+      goToLogin();
     } catch (err) {
-      setError(err.response?.data?.message || 'Ошибка регистрации. Попробуйте снова.');
+      setError(err.message || 'Ошибка регистрации. Попробуйте снова.');
     } finally {
       setLoading(false);
     }
@@ -30,7 +30,7 @@ function Register({ onRegisterSuccess, onGoToLogin }) {
     <div className="register-container">
       <div className="register-form-box">
         <h1 className="register-title">Регистрация</h1>
-        
+
         <form onSubmit={handleSubmit} className="register-form">
           <div className="register-input-group">
             <label className="register-label">Имя:</label>
@@ -83,8 +83,8 @@ function Register({ onRegisterSuccess, onGoToLogin }) {
 
           {error && <div className="register-error">{error}</div>}
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={loading}
             className="register-button"
           >
@@ -95,8 +95,8 @@ function Register({ onRegisterSuccess, onGoToLogin }) {
         <div className="register-footer">
           <p className="register-footer-text">
             Уже есть аккаунт?{' '}
-            <button 
-              onClick={onGoToLogin}
+            <button
+              onClick={goToLogin}
               className="register-link"
             >
               Войти
