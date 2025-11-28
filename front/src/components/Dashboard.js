@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getProfile, updateProfile } from '../api';
+import { getProfile, updateProfile, getProjects, createProject, getTaskStats } from '../api';
 import './Dashboard.css';
 
 function Dashboard({ onLogout }) {
@@ -10,16 +10,13 @@ function Dashboard({ onLogout }) {
   const [editedProfile, setEditedProfile] = useState({ firstName: '', lastName: '' });
   const [modalError, setModalError] = useState('');
 
-  // Заглушки данных (пока нет бэкенда)
-  const [projects] = useState([
-    { id: 1, name: 'Проект Alpha', role: 'Менеджер', status: 'Активен' },
-    { id: 2, name: 'Проект Beta', role: 'Разработчик', status: 'Активен' },
-    { id: 3, name: 'Проект Gamma', role: 'Наблюдатель', status: 'Закрыт' },
-  ]);
+  const [projects, setProjects] = useState([]);
+  const [projectsLoading, setProjectsLoading] = useState(true);
+  const [projectsError, setProjectsError] = useState('');
 
-  const [taskStats] = useState({
-    assigned: { closed: 5, total: 12 },
-  });
+  const [taskStats, setTaskStats] = useState({ total: 0, closed: 0, overdue: 0 });
+  const [taskStatsLoading, setTaskStatsLoading] = useState(true);
+  const [taskStatsError, setTaskStatsError] = useState('');
 
   const [newProject, setNewProject] = useState({ name: '', description: '', subjectName: '' });
   const [createMessage, setCreateMessage] = useState({ type: '', text: '' });
@@ -36,17 +33,59 @@ function Dashboard({ onLogout }) {
       }
     };
     loadProfile();
+    // Загрузка списка проектов
+    const loadProjects = async () => {
+      setProjectsLoading(true);
+      try {
+        const list = await getProjects();
+        setProjects(list || []);
+        setProjectsError('');
+      } catch (err) {
+        setProjectsError(err.message || 'Не удалось загрузить проекты');
+      } finally {
+        setProjectsLoading(false);
+      }
+    };
+    loadProjects();
+    // загрузка статистики задач
+    const loadTaskStats = async () => {
+      setTaskStatsLoading(true);
+      try {
+        const stats = await getTaskStats();
+        setTaskStats(stats || { total: 0, closed: 0, overdue: 0 });
+        setTaskStatsError('');
+      } catch (err) {
+        setTaskStatsError(err.message || 'Ошибка загрузки статистики задач');
+      } finally {
+        setTaskStatsLoading(false);
+      }
+    };
+    loadTaskStats();
   }, []);
 
   const handleCreateProject = (e) => {
     e.preventDefault();
-    // Заглушка: здесь будет вызов API для создания проекта
-    if (!newProject.name.trim()) {
-      setCreateMessage({ type: 'error', text: 'Название проекта обязательно' });
-      return;
-    }
-    setCreateMessage({ type: 'success', text: `Создан проект: ${newProject.name}` });
-    setNewProject({ name: '', description: '', subjectName: '' });
+    const doCreate = async () => {
+      if (!newProject.name.trim()) {
+        setCreateMessage({ type: 'error', text: 'Название проекта обязательно' });
+        return;
+      }
+      if (!newProject.subjectName || !newProject.subjectName.trim()) {
+        setCreateMessage({ type: 'error', text: 'Предмет проекта обязателен' });
+        return;
+      }
+      try {
+        const created = await createProject(newProject);
+        setCreateMessage({ type: 'success', text: `Создан проект: ${created.name || newProject.name}` });
+        setNewProject({ name: '', description: '', subjectName: '' });
+        // Обновляем список проектов
+        const list = await getProjects();
+        setProjects(list || []);
+      } catch (err) {
+        setCreateMessage({ type: 'error', text: err.message || 'Ошибка при создании проекта' });
+      }
+    };
+    doCreate();
   };
 
   const handleOpenEditModal = () => {
@@ -138,15 +177,21 @@ function Dashboard({ onLogout }) {
           {/* Проекты */}
           <div className="dashboard-section">
             <h3 className="dashboard-section-title">Мои проекты</h3>
-            {projects.length === 0 ? (
+            {projectsLoading ? (
+              <p className="dashboard-loading">Загрузка проектов...</p>
+            ) : projectsError ? (
+              <p className="dashboard-error">{projectsError}</p>
+            ) : projects.length === 0 ? (
               <p className="dashboard-placeholder-text">Нет проектов</p>
             ) : (
               <table className="dashboard-table">
                 <thead>
                   <tr>
                     <th>Название</th>
+                    <th>Предмет</th>
                     <th>Роль</th>
                     <th>Статус</th>
+                    <th>Создан</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -160,14 +205,16 @@ function Dashboard({ onLogout }) {
                           {proj.name}
                         </span>
                       </td>
+                      <td>{proj.subjectName || '—'}</td>
                       <td>{proj.role}</td>
                       <td>
                         <span
-                          className={`dashboard-badge ${proj.status === 'Активен' ? 'badge-active' : 'badge-closed'}`}
+                          className={`dashboard-badge ${proj.status === 'ACTIVE' || proj.status === 'Активен' ? 'badge-active' : 'badge-closed'}`}
                         >
                           {proj.status}
                         </span>
                       </td>
+                      <td>{proj.createdAt ? new Date(proj.createdAt).toLocaleString('ru-RU') : '—'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -181,22 +228,30 @@ function Dashboard({ onLogout }) {
           {/* Статистика задач */}
           <div className="dashboard-section">
             <h3 className="dashboard-section-title">Статистика по задачам</h3>
-            <table className="dashboard-table">
-              <thead>
-                <tr>
-                  <th>Тип</th>
-                  <th>Закрыто</th>
-                  <th>Всего</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Назначенные задачи</td>
-                  <td>{taskStats.assigned.closed}</td>
-                  <td>{taskStats.assigned.total}</td>
-                </tr>
-              </tbody>
-            </table>
+            {taskStatsLoading ? (
+              <p className="dashboard-loading">Загрузка статистики...</p>
+            ) : taskStatsError ? (
+              <p className="dashboard-error">{taskStatsError}</p>
+            ) : (
+              <table className="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Тип</th>
+                    <th>Закрыто</th>
+                    <th>Просрочено</th>
+                    <th>Всего</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Назначенные задачи</td>
+                    <td>{taskStats.closed ?? 0}</td>
+                    <td>{taskStats.overdue ?? 0}</td>
+                    <td>{taskStats.total ?? 0}</td>
+                  </tr>
+                </tbody>
+              </table>
+            )}
           </div>
 
           {/* Создание проекта */}

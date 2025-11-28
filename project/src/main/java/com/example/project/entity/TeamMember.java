@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +24,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class TeamMember {
 
     @Id
@@ -44,5 +46,6 @@ public class TeamMember {
     private LocalDateTime joinedDate;
 
     @ManyToMany(mappedBy = "assignedMembers")
+    @Builder.Default
     private List<Result> assignedResults = new ArrayList<>();
 }

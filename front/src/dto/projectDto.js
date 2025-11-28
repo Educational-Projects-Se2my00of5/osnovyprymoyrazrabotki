@@ -1,9 +1,20 @@
-// DTO-фабрики для запросов, связанных с проектами
-// Пока здесь заглушки — добавляйте конкретные поля по мере роста требований
-export function CreateProjectDto({ title, description }) {
-    return { title, description };
+// DTO-фабрики для запросов и ответов, связанных с проектами
+export function CreateProjectDto({ name, description, subjectName }) {
+    return { name, description, subjectName };
 }
 
-export function UpdateProjectDto({ id, title, description }) {
-    return { id, title, description };
+export function UpdateProjectDto({ id, name, description, subjectName }) {
+    return { id, name, description, subjectName };
+}
+
+export function ProjectSummaryDto(data) {
+    if (!data) return null;
+    return {
+        id: data.id,
+        name: data.name,
+        subjectName: data.subjectName,
+        status: data.status,
+        role: data.role,
+        createdAt: data.createdAt,
+    };
 }

@@ -3,6 +3,7 @@ package com.example.project.entity;
 import com.example.project.entity.enums.ResultStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Result {
 
     @Id
@@ -47,9 +49,11 @@ public class Result {
             joinColumns = @JoinColumn(name = "result_id"),
             inverseJoinColumns = @JoinColumn(name = "team_member_id")
     )
+    @Builder.Default
     private List<TeamMember> assignedMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "dependentResult", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Dependency> dependencies = new ArrayList<>();
 
     @PrePersist

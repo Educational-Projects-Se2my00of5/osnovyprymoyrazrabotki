@@ -15,7 +15,6 @@ export function LogoutDto(refreshToken) {
     return { refreshToken };
 }
 
-// Response DTO: оба токена (access + refresh)
 export function BothTokensResponseDto(data) {
     if (!data) return null;
     return {
