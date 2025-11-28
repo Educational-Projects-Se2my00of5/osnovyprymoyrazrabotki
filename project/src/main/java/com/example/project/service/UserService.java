@@ -23,4 +23,19 @@ public class UserService {
 
         return userMapper.userToUserInfo(user);
     }
+
+    public UserDto.UserInfo updateUserInfo(String authHeader, UserDto.UpdateRequest request) {
+        User user = userRepository.findByEmail(jwtService.extractEmailFromHeader(authHeader))
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        if (request.getFirstName() != null && !request.getFirstName().isBlank()) {
+            user.setFirstName(request.getFirstName());
+        }
+        if (request.getLastName() != null && !request.getLastName().isBlank()) {
+            user.setLastName(request.getLastName());
+        }
+
+        User saved = userRepository.save(user);
+        return userMapper.userToUserInfo(saved);
+    }
 }

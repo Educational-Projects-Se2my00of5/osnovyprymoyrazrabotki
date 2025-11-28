@@ -2,10 +2,8 @@ package com.example.project.service;
 
 import com.example.project.entity.User;
 import com.example.project.exception.AuthenticationException;
-import com.example.project.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;

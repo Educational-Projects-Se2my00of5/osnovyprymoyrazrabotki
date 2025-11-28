@@ -6,7 +6,6 @@ import com.example.project.entity.User;
 import com.example.project.exception.AuthenticationException;
 import com.example.project.exception.BadRequestException;
 import com.example.project.exception.NotFoundException;
-import com.example.project.mapper.UserMapper;
 import com.example.project.repository.RefreshTokenRepository;
 import com.example.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

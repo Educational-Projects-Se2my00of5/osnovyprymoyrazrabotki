@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getProfile } from '../api';
+import { getProfile, updateProfile } from '../api';
 import './Dashboard.css';
 
 function Dashboard({ onLogout }) {
@@ -56,11 +56,20 @@ function Dashboard({ onLogout }) {
 
   const handleSaveProfile = async (e) => {
     e.preventDefault();
-    // Заглушка: здесь будет вызов API для обновления профиля
-    alert(`Профиль обновлён: ${editedProfile.firstName} ${editedProfile.lastName}`);
-    // Обновляем локальный state для демонстрации
-    setProfile({ ...profile, firstName: editedProfile.firstName, lastName: editedProfile.lastName });
-    setIsEditModalOpen(false);
+    // Вызываем API обновления профиля
+    try {
+      setLoading(true);
+      const updated = await updateProfile({
+        firstName: editedProfile.firstName,
+        lastName: editedProfile.lastName,
+      });
+      setProfile(updated);
+      setIsEditModalOpen(false);
+    } catch (err) {
+      alert(err.message || 'Не удалось обновить профиль');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleProjectClick = (projectId) => {

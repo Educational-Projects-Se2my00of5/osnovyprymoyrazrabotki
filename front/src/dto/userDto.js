@@ -9,3 +9,11 @@ export function UserInfoDto(data) {
         registrationDate: data.registrationDate, // формат зависит от бэкенда (ISO string)
     };
 }
+
+// DTO для запроса на обновление профиля (UserDto.UpdateRequest на бэке)
+export function UpdateUserRequestDto(firstName, lastName) {
+    return {
+        firstName: firstName,
+        lastName: lastName,
+    };
+}
