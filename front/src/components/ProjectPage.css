@@ -1,11 +1,12 @@
-/* Styles specific to ProjectPage (extracted from Dashboard.css) */
+/* ProjectPage Styles */
 .project-page {
   min-height: 100vh;
   background-color: #f5f5f5;
   padding: 20px;
 }
 
-.dashboard-header {
+/* Header */
+.project-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,13 +17,19 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.dashboard-title {
+.project-header-title {
   margin: 0;
   color: #333;
   font-size: 28px;
 }
 
-.dashboard-logout-button {
+.project-header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.project-back-button {
   padding: 10px 20px;
   font-size: 14px;
   background-color: #6c757d;
@@ -34,10 +41,263 @@
   transition: background-color 0.2s;
 }
 
-.dashboard-logout-button:hover {
+.project-back-button:hover {
   background-color: #5a6268;
 }
 
+.project-delete-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.project-delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Two-column grid */
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.project-left,
+.project-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 992px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section card */
+.project-section {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.project-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.project-section-title {
+  margin: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+/* Buttons */
+.project-edit-button,
+.project-add-button {
+  padding: 6px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.project-edit-button:hover,
+.project-add-button:hover {
+  background-color: #0056b3;
+}
+
+/* Project Info */
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.project-info-row {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.project-label {
+  font-weight: 600;
+  color: #555;
+  min-width: 120px;
+}
+
+.project-value {
+  color: #333;
+   white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* Action buttons */
+.project-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.project-action-button {
+  padding: 10px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.project-action-button:hover {
+  background-color: #218838;
+}
+
+/* Table */
+.project-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.project-table thead {
+  background-color: #f8f9fa;
+}
+
+.project-table th,
+.project-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 200px;
+}
+
+.project-table th {
+  font-weight: 600;
+  color: #495057;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.project-table td {
+  color: #333;
+}
+
+.project-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.project-table-row-clickable {
+  cursor: pointer;
+}
+
+.project-table-cell-clickable {
+  cursor: pointer;
+}
+
+.project-delete-member-button {
+  padding: 6px 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.project-delete-member-button:hover {
+  background-color: #c82333;
+}
+
+/* Stats */
+.project-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.project-stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.project-stat-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.project-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #007bff;
+}
+
+.project-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.project-stats-table thead {
+  background-color: #f8f9fa;
+}
+
+.project-stats-table th,
+.project-stats-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.project-stats-table th {
+  font-weight: 600;
+  color: #495057;
+  font-size: 14px;
+}
+
+.project-stats-table td {
+  color: #333;
+  font-size: 16px;
+}
+
+/* Placeholder */
+.project-placeholder {
+  color: #6c757d;
+  font-size: 16px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+/* Error */
 .dashboard-error {
   padding: 15px;
   border-radius: 4px;
@@ -45,43 +305,4 @@
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
-}
-
-.project-content {
-  background-color: white;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.dashboard-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-.dashboard-table thead {
-  background-color: #f8f9fa;
-}
-
-.dashboard-table th,
-.dashboard-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.dashboard-table th {
-  font-weight: 600;
-  color: #495057;
-  font-size: 14px;
-  text-transform: uppercase;
-}
-
-.dashboard-table td {
-  color: #333;
-}
-
-.dashboard-table tbody tr:hover {
-  background-color: #f8f9fa;
 }

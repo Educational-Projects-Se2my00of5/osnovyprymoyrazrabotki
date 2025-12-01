@@ -1,19 +1,27 @@
 package com.example.project.service;
 
 import com.example.project.dto.ProjectDto;
+import com.example.project.dto.UserDto;
 import com.example.project.entity.Project;
 import com.example.project.entity.TeamMember;
 import com.example.project.entity.User;
+import com.example.project.entity.enums.ProjectStatus;
+import com.example.project.exception.BadRequestException;
 import com.example.project.exception.ForbiddenException;
 import com.example.project.exception.NotFoundException;
 import com.example.project.repository.ProjectRepository;
+import com.example.project.repository.ResultRepository;
 import com.example.project.repository.TeamMemberRepository;
 import com.example.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,12 +31,14 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final TeamMemberRepository teamMemberRepository;
     private final UserRepository userRepository;
+    private final ResultRepository resultRepository;
     private final JwtService jwtService;
 
     public List<ProjectDto.ProjectSummary> getMyProjects(String authHeader) {
         String email = jwtService.extractEmailFromHeader(authHeader);
         User user = userRepository.findByEmail(email).orElse(null);
-        if (user == null) return List.of();
+        if (user == null)
+            return List.of();
 
         List<TeamMember> memberships = teamMemberRepository.findByUser(user);
 
@@ -48,23 +58,24 @@ public class ProjectService {
     public ProjectDto.ProjectSummary createProject(String authHeader, ProjectDto.CreateRequest req) {
         String email = jwtService.extractEmailFromHeader(authHeader);
         User user = userRepository.findByEmail(email).orElse(null);
-        if (user == null) return null;
+        if (user == null)
+            return null;
 
         var project = Project.builder()
-        .name(req.getName())
-        .description(req.getDescription())
-        .subjectName(req.getSubjectName())
-        .build();
+                .name(req.getName())
+                .description(req.getDescription())
+                .subjectName(req.getSubjectName())
+                .build();
 
         var saved = projectRepository.save(project);
 
-        // Добавляем создателя как владельца проекта
+        // Добавляем создателя как участника проекта
         var member = TeamMember.builder()
-        .user(user)
-        .project(saved)
-        .role("Создатель")
-        .joinedDate(LocalDateTime.now())
-        .build();
+                .user(user)
+                .project(saved)
+                .role("Создатель")
+                .joinedDate(LocalDateTime.now())
+                .build();
         teamMemberRepository.save(member);
 
         return ProjectDto.ProjectSummary.builder()
@@ -78,19 +89,17 @@ public class ProjectService {
     }
 
     public ProjectDto.ProjectDetails getProjectDetails(String authHeader, Long projectId) {
-        var opt = projectRepository.findById(projectId);
-        if (opt.isEmpty()) return null;
-
-        var project = opt.get();
+        var project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Проект не найден"));
 
         String myRole = null;
         String email = jwtService.extractEmailFromHeader(authHeader);
         var user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        
-        var membership = teamMemberRepository.findByUserAndProject(user, project);
-        if (membership.isPresent()) myRole = membership.get().getRole();
-        else throw new ForbiddenException("Пользователь не является участником проекта");
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        teamMemberRepository.findByUserAndProject(user, project).orElseThrow(() -> {
+            throw new ForbiddenException("Пользователь не является участником проекта");
+        });
 
         var members = project.getTeamMembers().stream().map(m -> {
             var u = m.getUser();
@@ -104,14 +113,195 @@ public class ProjectService {
         }).toList();
 
         return ProjectDto.ProjectDetails.builder()
-            .id(project.getId())
-            .name(project.getName())
-            .description(project.getDescription())
-            .subjectName(project.getSubjectName())
-            .status(project.getStatus() != null ? project.getStatus().name() : null)
-            .createdAt(project.getCreatedDate())
-            .members(members)
-            .myRole(myRole)
-            .build();
+                .id(project.getId())
+                .name(project.getName())
+                .description(project.getDescription())
+                .subjectName(project.getSubjectName())
+                .status(project.getStatus() != null ? project.getStatus().name() : null)
+                .createdAt(project.getCreatedDate())
+                .members(members)
+                .myRole(myRole)
+                .build();
+    }
+
+    public Page<UserDto.UserInfo> getAvailableUsers(String authHeader, Long projectId, int page, int size) {
+        var project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Проект не найден"));
+
+        String email = jwtService.extractEmailFromHeader(authHeader);
+        var user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        // Проверяем, что пользователь - участник проекта
+        teamMemberRepository.findByUserAndProject(user, project).orElseThrow(() -> {
+            throw new ForbiddenException("Пользователь не является участником проекта");
+        });
+
+        // Получаем ID всех участников проекта
+        Set<Long> memberIds = project.getTeamMembers().stream()
+                .map(m -> m.getUser().getId())
+                .collect(Collectors.toSet());
+
+        // Получаем всех пользователей и фильтруем тех, кто не в проекте
+        List<User> allUsers = userRepository.findAll();
+        List<UserDto.UserInfo> availableUsers = allUsers.stream()
+                .filter(u -> !memberIds.contains(u.getId()))
+                .map(u -> UserDto.UserInfo.builder()
+                        .id(String.valueOf(u.getId()))
+                        .firstName(u.getFirstName())
+                        .lastName(u.getLastName())
+                        .email(u.getEmail())
+                        .registrationDate(u.getRegistrationDate())
+                        .build())
+                .toList();
+
+        // Применяем пагинацию вручную
+        int start = page * size;
+        int end = Math.min(start + size, availableUsers.size());
+        
+        if (start >= availableUsers.size()) {
+            return new PageImpl<>(List.of(), PageRequest.of(page, size), availableUsers.size());
+        }
+        
+        List<UserDto.UserInfo> pageContent = availableUsers.subList(start, end);
+        return new PageImpl<>(pageContent, PageRequest.of(page, size), availableUsers.size());
+    }
+
+    public ProjectDto.TaskStats getProjectTaskStats(String authHeader, Long projectId) {
+        var project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Проект не найден"));
+
+        String email = jwtService.extractEmailFromHeader(authHeader);
+        var user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        // Проверяем, что пользователь - участник проекта
+        teamMemberRepository.findByUserAndProject(user, project).orElseThrow(() -> {
+            throw new ForbiddenException("Пользователь не является участником проекта");
+        });
+
+        // Статистика для назначенных мне
+        long assignedTotal = resultRepository.countAssignedForUserInProject(project, user);
+        long assignedClosed = resultRepository.countCompletedAssignedForUserInProject(project, user);
+        long assignedOverdue = resultRepository.countOverdueAssignedForUserInProject(project, user);
+
+        // Статистика для всех в проекте
+        long allTotal = resultRepository.countByProject(project);
+        long allClosed = resultRepository.countCompletedByProject(project);
+        long allOverdue = resultRepository.countOverdueByProject(project);
+
+        return ProjectDto.TaskStats.builder()
+                .assigned(ProjectDto.TaskTypeStats.builder()
+                        .total(assignedTotal)
+                        .closed(assignedClosed)
+                        .overdue(assignedOverdue)
+                        .build())
+                .all(ProjectDto.TaskTypeStats.builder()
+                        .total(allTotal)
+                        .closed(allClosed)
+                        .overdue(allOverdue)
+                        .build())
+                .build();
+    }
+
+    public ProjectDto.ProjectDetails updateProject(String authHeader, Long projectId, ProjectDto.UpdateRequest req) {
+        var project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Проект не найден"));
+
+        String email = jwtService.extractEmailFromHeader(authHeader);
+        var user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        // Проверяем права (только создатель или владелец может редактировать)
+        teamMemberRepository.findByUserAndProject(user, project).orElseThrow(() -> {
+            throw new ForbiddenException("Пользователь не является участником проекта");
+        });
+
+        project.setName(req.getName());
+        project.setDescription(req.getDescription());
+        project.setSubjectName(req.getSubjectName());
+        project.setStatus(ProjectStatus.valueOf(req.getStatus()));
+        projectRepository.save(project);
+
+        // Возвращаем обновленные детали
+        return getProjectDetails(authHeader, project.getId());
+    }
+
+    public void addMemberToProject(String authHeader, Long projectId, ProjectDto.AddMemberRequest req) {
+        var project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Проект не найден"));
+
+        String email = jwtService.extractEmailFromHeader(authHeader);
+        var currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        // Проверяем права (только создатель или владелец может добавлять участников)
+        teamMemberRepository.findByUserAndProject(currentUser, project).orElseThrow(() -> {
+            throw new ForbiddenException("Пользователь не является участником проекта");
+        });
+
+        var newUser = userRepository.findById(req.getUserId())
+                .orElseThrow(() -> new NotFoundException("Пользователь для добавления не найден"));
+
+        // Проверяем, что пользователь еще не участник
+        var existing = teamMemberRepository.findByUserAndProject(newUser, project);
+        if (existing.isPresent()) {
+            throw new BadRequestException("Пользователь уже является участником проекта");
+        }
+
+        String role = (req.getRole() != null && !req.getRole().isBlank()) ? req.getRole() : "Участник";
+
+        var newMember = TeamMember.builder()
+                .user(newUser)
+                .project(project)
+                .role(role)
+                .joinedDate(LocalDateTime.now())
+                .build();
+
+        teamMemberRepository.save(newMember);
+    }
+
+    public void removeMemberFromProject(String authHeader, Long projectId, Long memberId) {
+        var project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Проект не найден"));
+
+        String email = jwtService.extractEmailFromHeader(authHeader);
+        var currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        // Проверяем права
+        teamMemberRepository.findByUserAndProject(currentUser, project).orElseThrow(() -> {
+            throw new ForbiddenException("Пользователь не является участником проекта");
+        });
+
+        var memberToRemove = teamMemberRepository.findById(memberId)
+                .orElseThrow(() -> new NotFoundException("Участник не найден"));
+
+        if (!memberToRemove.getProject().getId().equals(projectId)) {
+            throw new BadRequestException("Участник не принадлежит данному проекту");
+        }
+
+        // Нельзя удалить последнего участника
+        if (project.getTeamMembers().size() <= 1) {
+            throw new BadRequestException("Нельзя удалить последнего участника проекта");
+        }
+
+        teamMemberRepository.delete(memberToRemove);
+    }
+
+    public void deleteProject(String authHeader, Long projectId) {
+        var project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Проект не найден"));
+
+        String email = jwtService.extractEmailFromHeader(authHeader);
+        var user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        // Проверяем, что пользователь - участник проекта
+        teamMemberRepository.findByUserAndProject(user, project).orElseThrow(() -> {
+            throw new ForbiddenException("Пользователь не является участником проекта");
+        });
+
+        projectRepository.delete(project);
     }
 }

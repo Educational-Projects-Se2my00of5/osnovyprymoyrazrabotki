@@ -16,9 +16,11 @@ public class AuthDto {
     @AllArgsConstructor
     public static class RegisterRequest {
         @NotBlank(message = "Имя обязательно")
+        @Size(min = 1, max = 50, message = "Имя должно быть от 1 до 50 символов")
         private String firstName;
 
         @NotBlank(message = "Фамилия обязательна")
+        @Size(min = 1, max = 50, message = "Фамилия должна быть от 1 до 50 символов")
         private String lastName;
 
         @NotBlank(message = "Email обязателен")
@@ -26,7 +28,7 @@ public class AuthDto {
         private String email;
 
         @NotBlank(message = "Пароль обязателен")
-        @Size(min = 6, message = "Пароль должен быть минимум 6 символов")
+        @Size(min = 6, max = 100, message = "Пароль должен быть от 6 до 100 символов")
         private String password;
     }
 

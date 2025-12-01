@@ -1,0 +1,64 @@
+.confirm-delete-modal {
+  text-align: center;
+  max-width: 450px;
+}
+
+.confirm-delete-content {
+  margin: 20px;
+}
+
+.confirm-delete-modal h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.confirm-delete-modal p {
+  margin: 10px 0;
+  color: #555;
+}
+
+.warning-text {
+  color: #dc3545;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.button-danger {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.button-danger:hover {
+  background-color: #c82333;
+}
+
+.confirm-delete-modal .modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.confirm-delete-modal .modal-buttons button:not(.button-danger) {
+  padding: 10px 20px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.confirm-delete-modal .modal-buttons button:not(.button-danger):hover {
+  background-color: #5a6268;
+}

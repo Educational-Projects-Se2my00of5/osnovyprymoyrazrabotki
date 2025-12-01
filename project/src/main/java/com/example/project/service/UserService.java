@@ -7,6 +7,8 @@ import com.example.project.exception.NotFoundException;
 import com.example.project.mapper.UserMapper;
 import com.example.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,5 +39,11 @@ public class UserService {
 
         User saved = userRepository.save(user);
         return userMapper.userToUserInfo(saved);
+    }
+
+    public Page<UserDto.UserInfo> getAllUsers(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return userRepository.findAll(pageRequest)
+                .map(userMapper::userToUserInfo);
     }
 }

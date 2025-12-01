@@ -16,3 +16,20 @@ export function UpdateUserRequestDto(firstName, lastName) {
         lastName: lastName,
     };
 }
+
+export function PageDto(data, itemMapper = (item) => item) {
+    if (!data) return {
+        content: [],
+        totalElements: 0,
+        totalPages: 0,
+        number: 0,
+        size: 0,
+    };
+    return {
+        content: Array.isArray(data.content) ? data.content.map(itemMapper) : [],
+        totalElements: data.totalElements || 0,
+        totalPages: data.totalPages || 0,
+        number: data.number || 0,
+        size: data.size || 0,
+    };
+}

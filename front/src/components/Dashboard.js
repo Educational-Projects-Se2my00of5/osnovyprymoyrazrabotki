@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProfile, updateProfile, getProjects, createProject, getTaskStats } from '../api';
+import { getStatusLabel } from '../utils/projectUtils';
 import './Dashboard.css';
 
 function Dashboard({ onLogout }) {
@@ -76,7 +77,7 @@ function Dashboard({ onLogout }) {
         return;
       }
       try {
-        const created = await createProject(newProject);
+        const created = await createProject(newProject.name, newProject.description, newProject.subjectName);
         setCreateMessage({ type: 'success', text: `Создан проект: ${created.name || newProject.name}` });
         setNewProject({ name: '', description: '', subjectName: '' });
         // Обновляем список проектов
@@ -106,10 +107,10 @@ function Dashboard({ onLogout }) {
     // Вызываем API обновления профиля
     try {
       setLoading(true);
-      const updated = await updateProfile({
-        firstName: editedProfile.firstName,
-        lastName: editedProfile.lastName,
-      });
+      const updated = await updateProfile(
+        editedProfile.firstName,
+        editedProfile.lastName
+      );
       setProfile(updated);
       setIsEditModalOpen(false);
       setModalError('');
@@ -208,14 +209,8 @@ function Dashboard({ onLogout }) {
                         </span>
                       </td>
                       <td>{proj.subjectName || '—'}</td>
-                      <td>{proj.role}</td>
-                      <td>
-                        <span
-                          className={`dashboard-badge ${proj.status === 'ACTIVE' || proj.status === 'Активен' ? 'badge-active' : 'badge-closed'}`}
-                        >
-                          {proj.status}
-                        </span>
-                      </td>
+                      <td>{proj.role || '—'}</td>
+                      <td>{getStatusLabel(proj.status)}</td>
                       <td>{proj.createdAt ? new Date(proj.createdAt).toLocaleString('ru-RU') : '—'}</td>
                     </tr>
                   ))}

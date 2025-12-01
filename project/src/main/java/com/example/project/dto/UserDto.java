@@ -1,6 +1,7 @@
 package com.example.project.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,9 +30,11 @@ public class UserDto {
     @AllArgsConstructor
     public static class UpdateRequest {
         @NotBlank(message = "Имя обязательно")
+        @Size(min = 1, max = 50, message = "Имя должно быть от 1 до 50 символов")
         private String firstName;
 
         @NotBlank(message = "Фамилия обязательна")
+        @Size(min = 1, max = 50, message = "Фамилия должна быть от 1 до 50 символов")
         private String lastName;
     }
 }

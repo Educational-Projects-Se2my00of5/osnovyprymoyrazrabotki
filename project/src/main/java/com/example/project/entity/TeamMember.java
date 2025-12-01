@@ -39,7 +39,7 @@ public class TeamMember {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String role;
 
     @Column(nullable = false)
