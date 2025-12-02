@@ -1,23 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProject, getProjectTaskStats, removeMemberFromProject, deleteProject } from '../api/projects';
+import { getProfile } from '../api/user';
 import { getStatusLabel } from '../utils/projectUtils';
 import EditProjectModal from './EditProjectModal';
 import AddMemberModal from './AddMemberModal';
+import MemberDetailsModal from './MemberDetailsModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import './ProjectPage.css';
 
 function ProjectPage() {
-  const { id } = useParams();
-  const projectId = id;
+  const { projectId } = useParams();
   const navigate = useNavigate();
 
   const [project, setProject] = useState(null);
+  const [currentMemberId, setCurrentMemberId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
+  const [showMemberModal, setShowMemberModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState(null);
   const [selectedMember, setSelectedMember] = useState(null);
@@ -31,8 +34,16 @@ function ProjectPage() {
     const load = async () => {
       setLoading(true);
       try {
+        const profile = await getProfile();
         const p = await getProject(projectId);
         setProject(p);
+        
+        // Находим ID участника проекта по userId
+        const currentMember = p.members?.find(m => m.userId === profile.id);
+        if (currentMember) {
+          setCurrentMemberId(currentMember.id);
+        }
+        
         const stats = await getProjectTaskStats(projectId);
         setTaskStats(stats);
       } catch (err) {
@@ -54,7 +65,7 @@ function ProjectPage() {
 
   const handleMemberClick = (member) => {
     setSelectedMember(member);
-    // TODO: show member stats modal
+    setShowMemberModal(true);
   };
 
   const handleDeleteMember = (memberId) => {
@@ -109,7 +120,7 @@ function ProjectPage() {
         <h1 className="project-header-title">Проект: {project ? project.name : '—'}</h1>
         <div className="project-header-actions">
           <button onClick={() => setShowDeleteConfirm(true)} className="project-delete-button">Удалить проект</button>
-          <button onClick={() => navigate(-1)} className="project-back-button">Назад</button>
+          <button onClick={() => navigate('/')} className="project-back-button">Назад</button>
         </div>
       </div>
 
@@ -145,8 +156,9 @@ function ProjectPage() {
             </div>
             {/* Action buttons */}
             <div className="project-actions">
+              <button className="project-action-button" onClick={() => currentMemberId && navigate(`/projects/${projectId}/tasks/${currentMemberId}`)}>Мои задачи</button>
+              <button className="project-action-button" onClick={() => navigate(`/projects/${projectId}/tasks`)}>Все задачи</button>
               <button className="project-action-button" onClick={() => alert('Диаграмма Ганта (в разработке)')}>Диаграмма Ганта</button>
-              <button className="project-action-button" onClick={() => alert('Все задачи (в разработке)')}>Все задачи</button>
             </div>
           </div>
 
@@ -210,15 +222,39 @@ function ProjectPage() {
               <tbody>
                 <tr>
                   <td>Назначенный</td>
-                  <td>{taskStats.assigned.total}</td>
-                  <td>{taskStats.assigned.closed}</td>
-                  <td>{taskStats.assigned.overdue}</td>
+                  <td>
+                    <span className="project-stats-link" onClick={() => currentMemberId && navigate(`/projects/${projectId}/tasks/${currentMemberId}?status=all`)}>
+                      {taskStats.assigned.total}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="project-stats-link" onClick={() => currentMemberId && navigate(`/projects/${projectId}/tasks/${currentMemberId}?status=completed`)}>
+                      {taskStats.assigned.closed}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="project-stats-link" onClick={() => currentMemberId && navigate(`/projects/${projectId}/tasks/${currentMemberId}?status=overdue`)}>
+                      {taskStats.assigned.overdue}
+                    </span>
+                  </td>
                 </tr>
                 <tr>
                   <td>Все</td>
-                  <td>{taskStats.all.total}</td>
-                  <td>{taskStats.all.closed}</td>
-                  <td>{taskStats.all.overdue}</td>
+                  <td>
+                    <span className="project-stats-link" onClick={() => navigate(`/projects/${projectId}/tasks?status=all`)}>
+                      {taskStats.all.total}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="project-stats-link" onClick={() => navigate(`/projects/${projectId}/tasks?status=completed`)}>
+                      {taskStats.all.closed}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="project-stats-link" onClick={() => navigate(`/projects/${projectId}/tasks?status=overdue`)}>
+                      {taskStats.all.overdue}
+                    </span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -246,6 +282,26 @@ function ProjectPage() {
           onAdded={async () => {
             setShowAddMemberModal(false);
             // Reload project to get updated members
+            try {
+              const updated = await getProject(projectId);
+              setProject(updated);
+            } catch (err) {
+              setError(err.message || 'Ошибка обновления проекта');
+            }
+          }}
+        />
+      )}
+
+      {/* Member Details Modal */}
+      {showMemberModal && selectedMember && (
+        <MemberDetailsModal
+          projectId={projectId}
+          member={selectedMember}
+          onClose={() => {
+            setShowMemberModal(false);
+            setSelectedMember(null);
+          }}
+          onRoleUpdated={async () => {
             try {
               const updated = await getProject(projectId);
               setProject(updated);

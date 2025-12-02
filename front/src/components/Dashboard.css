@@ -178,6 +178,18 @@
   background-color: #f8f9fa;
 }
 
+.dashboard-stats-link {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.dashboard-stats-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
 /* Badge for project status */
 .dashboard-badge {
   display: inline-block;

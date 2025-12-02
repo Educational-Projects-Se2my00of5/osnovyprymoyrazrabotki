@@ -53,3 +53,4 @@ export * from './api/auth';
 export * from './api/projects';
 export * from './api/user';
 export * from './api/tasks';
+export * from './api/results';

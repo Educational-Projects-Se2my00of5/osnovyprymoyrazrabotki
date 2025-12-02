@@ -14,16 +14,19 @@ import com.example.project.repository.ResultRepository;
 import com.example.project.repository.TeamMemberRepository;
 import com.example.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
@@ -158,11 +161,11 @@ public class ProjectService {
         // Применяем пагинацию вручную
         int start = page * size;
         int end = Math.min(start + size, availableUsers.size());
-        
+
         if (start >= availableUsers.size()) {
             return new PageImpl<>(List.of(), PageRequest.of(page, size), availableUsers.size());
         }
-        
+
         List<UserDto.UserInfo> pageContent = availableUsers.subList(start, end);
         return new PageImpl<>(pageContent, PageRequest.of(page, size), availableUsers.size());
     }
@@ -261,6 +264,7 @@ public class ProjectService {
         teamMemberRepository.save(newMember);
     }
 
+    @Transactional
     public void removeMemberFromProject(String authHeader, Long projectId, Long memberId) {
         var project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundException("Проект не найден"));
@@ -270,9 +274,8 @@ public class ProjectService {
                 .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
 
         // Проверяем права
-        teamMemberRepository.findByUserAndProject(currentUser, project).orElseThrow(() -> {
-            throw new ForbiddenException("Пользователь не является участником проекта");
-        });
+        teamMemberRepository.findByUserAndProject(currentUser, project)
+                .orElseThrow(() -> new ForbiddenException("Пользователь не является участником проекта"));
 
         var memberToRemove = teamMemberRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundException("Участник не найден"));
@@ -287,6 +290,30 @@ public class ProjectService {
         }
 
         teamMemberRepository.delete(memberToRemove);
+    }
+
+    public void updateMemberRole(String authHeader, Long projectId, Long memberId, String newRole) {
+        var project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Проект не найден"));
+
+        String email = jwtService.extractEmailFromHeader(authHeader);
+        var currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        // Проверяем права
+        teamMemberRepository.findByUserAndProject(currentUser, project).orElseThrow(() -> {
+            throw new ForbiddenException("Пользователь не является участником проекта");
+        });
+
+        var member = teamMemberRepository.findById(memberId)
+                .orElseThrow(() -> new NotFoundException("Участник не найден"));
+
+        if (!member.getProject().getId().equals(projectId)) {
+            throw new BadRequestException("Участник не принадлежит данному проекту");
+        }
+
+        member.setRole(newRole != null && !newRole.isBlank() ? newRole : "Участник");
+        teamMemberRepository.save(member);
     }
 
     public void deleteProject(String authHeader, Long projectId) {

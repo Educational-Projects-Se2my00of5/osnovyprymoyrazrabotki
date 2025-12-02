@@ -5,6 +5,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import ProjectPage from './components/ProjectPage';
+import TasksPage from './components/TasksPage';
 import { logout as apiLogout } from './api';
 import { clearAuth, getAccessToken, getRefreshToken } from './api/storage';
 
@@ -45,12 +46,17 @@ function App() {
 
   const ProjectRoute = () => (isAuthenticated() ? <ProjectPage /> : <Navigate to="/login" replace />);
 
+  const TasksRoute = () => (isAuthenticated() ? <TasksPage /> : <Navigate to="/login" replace />);
+
   return (
     <HashRouter>
       <Routes>
         <Route path="/login" element={<LoginRoute />} />
         <Route path="/register" element={<RegisterRoute />} />
-        <Route path="/projects/:id" element={<ProjectRoute />} />
+        <Route path="/projects/:projectId" element={<ProjectRoute />} />
+        <Route path="/projects/:projectId/tasks" element={<TasksRoute />} />
+        <Route path="/projects/:projectId/tasks/:userId" element={<TasksRoute />} />
+        <Route path="/tasks" element={<TasksRoute />} />
         <Route path="/" element={<DashboardRoute />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

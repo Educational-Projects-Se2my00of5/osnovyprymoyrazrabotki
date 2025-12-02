@@ -5,6 +5,7 @@ import com.example.project.dto.UserDto;
 import com.example.project.service.ProjectService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -87,6 +88,15 @@ public class ProjectController {
                                        @PathVariable("id") Long id,
                                        @PathVariable("memberId") Long memberId) {
         projectService.removeMemberFromProject(authHeader, id, memberId);
+    }
+
+    @PutMapping("/{id}/members/{memberId}/role")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateMemberRole(@RequestHeader("Authorization") String authHeader,
+                                @PathVariable("id") Long id,
+                                @PathVariable("memberId") Long memberId,
+                                @RequestBody @NotBlank String newRole) {
+        projectService.updateMemberRole(authHeader, id, memberId, newRole);
     }
 
     @DeleteMapping("/{id}")

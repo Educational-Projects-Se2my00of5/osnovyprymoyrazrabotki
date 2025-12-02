@@ -242,9 +242,21 @@ function Dashboard({ onLogout }) {
                 <tbody>
                   <tr>
                     <td>Назначенные задачи</td>
-                    <td>{taskStats.closed ?? 0}</td>
-                    <td>{taskStats.overdue ?? 0}</td>
-                    <td>{taskStats.total ?? 0}</td>
+                    <td>
+                      <span className="dashboard-stats-link" onClick={() => navigate('/tasks?status=completed')}>
+                        {taskStats.closed ?? 0}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="dashboard-stats-link" onClick={() => navigate('/tasks?status=overdue')}>
+                        {taskStats.overdue ?? 0}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="dashboard-stats-link" onClick={() => navigate('/tasks?status=all')}>
+                        {taskStats.total ?? 0}
+                      </span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
