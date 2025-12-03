@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { getAllMyResults, getProjectResults, getMyResultsInProject, getMemberResults } from '../api/results';
+import { getAllMyTasks, getProjectTasks, getMyTasksInProject, getMemberTasks } from '../api/tasks';
 import { getProject } from '../api/projects';
 import { getStatusLabel, statusFilters, sortOptions, filterTasksByStatus, sortTasks } from '../utils/taskUtils';
 import './TasksPage.css';
@@ -37,18 +37,18 @@ function TasksPage() {
         
         if (isAllUserTasks) {
           // Все задачи пользователя по всем проектам
-          tasksData = await getAllMyResults();
+          tasksData = await getAllMyTasks();
         } else if (isProjectTasks) {
           // Все задачи проекта
           const proj = await getProject(projectId);
           setProject(proj);
-          tasksData = await getProjectResults(projectId);
+          tasksData = await getProjectTasks(projectId);
         } else if (isUserProjectTasks) {
-          // Задачи конкретного пользователя в проекте
+          // Задачи конкретного пользователms.get('sort')я в проекте
           const proj = await getProject(projectId);
           setProject(proj);
           
-          tasksData = await getMemberResults(projectId, userId);
+          tasksData = await getMemberTasks(projectId, userId);
         }
         
         setTasks(tasksData || []);
@@ -68,6 +68,11 @@ function TasksPage() {
     setFilteredTasks(result);
     setCurrentPage(1);
   }, [tasks, statusFilter, sortBy]);
+
+  // Сбрасываем на первую страницу при изменении tasksPerPage
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [tasksPerPage]);
 
   const getPageTitle = () => {
     if (isAllUserTasks) return 'Мои задачи';

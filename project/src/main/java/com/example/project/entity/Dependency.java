@@ -30,12 +30,12 @@ public class Dependency {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dependent_result_id", nullable = false)
-    private Result dependentResult;
+    @JoinColumn(name = "dependent_task_id", nullable = false)
+    private Task dependentTask;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "required_result_id", nullable = false)
-    private Result requiredResult;
+    @JoinColumn(name = "required_task_id", nullable = false)
+    private Task requiredTask;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Создание проекта" id="activity-create-project">
-        <mxGraphModel dx="1033" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="773" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -107,7 +107,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="Добавление участников" id="activity-add-members">
-        <mxGraphModel dx="1215" dy="662" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="773" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -309,14 +309,14 @@
         </mxGraphModel>
     </diagram>
     <diagram id="Lz74zHOqZftjI3nUDqq4" name="Просмотр списка задач">
-        <mxGraphModel dx="2687" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="2427" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="MoF0sNrf8hHGNL5cvn2d-1" value="Просмотр списка задач" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" parent="1" vertex="1">
                     <mxGeometry x="-820" y="30" width="550" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="MoF0sNrf8hHGNL5cvn2d-2" value="Предусловие:&lt;br&gt;• Пользователь авторизован&lt;br&gt;• Пользователь является участником проекта&lt;div&gt;• Пользователь просматривает список проектов&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;/div&gt;&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;fontSize=10;size=23;" parent="1" vertex="1">
+                <mxCell id="MoF0sNrf8hHGNL5cvn2d-2" value="Предусловие:&lt;br&gt;• Пользователь авторизован&lt;br&gt;• Пользователь является участником проекта&lt;div&gt;• Пользователь просматривает проект&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;/div&gt;&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;fontSize=10;size=23;" parent="1" vertex="1">
                     <mxGeometry x="-330" y="250" width="230" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="MoF0sNrf8hHGNL5cvn2d-3" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" parent="1" vertex="1">
@@ -328,7 +328,7 @@
                 <mxCell id="MoF0sNrf8hHGNL5cvn2d-5" value="" style="endArrow=classic;html=1;" parent="1" source="MoF0sNrf8hHGNL5cvn2d-3" target="MoF0sNrf8hHGNL5cvn2d-4" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="MoF0sNrf8hHGNL5cvn2d-6" value="Отображает список&lt;br&gt;результатов пользователю" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                <mxCell id="MoF0sNrf8hHGNL5cvn2d-6" value="Отображает список&lt;br&gt;задач пользователю" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="-620" y="240" width="170" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="MoF0sNrf8hHGNL5cvn2d-7" value="" style="endArrow=classic;html=1;" parent="1" source="MoF0sNrf8hHGNL5cvn2d-4" target="MoF0sNrf8hHGNL5cvn2d-6" edge="1">
@@ -383,7 +383,7 @@
                         <mxPoint x="-490.7739557739558" y="460.3439803439803" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="MoF0sNrf8hHGNL5cvn2d-17" value="Отображает&lt;br&gt;отфильтрованные результаты" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                <mxCell id="MoF0sNrf8hHGNL5cvn2d-17" value="Отображает&lt;br&gt;отфильтрованные задачи" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="-620" y="620" width="170" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="MoF0sNrf8hHGNL5cvn2d-18" value="" style="endArrow=classic;html=1;" parent="1" source="MoF0sNrf8hHGNL5cvn2d-11" target="MoF0sNrf8hHGNL5cvn2d-17" edge="1">
@@ -395,19 +395,19 @@
                 <mxCell id="MoF0sNrf8hHGNL5cvn2d-20" value="" style="endArrow=classic;html=1;" parent="1" source="MoF0sNrf8hHGNL5cvn2d-15" target="MoF0sNrf8hHGNL5cvn2d-17" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="MoF0sNrf8hHGNL5cvn2d-21" value="Пользователь&#xa;выбирает результат?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                <mxCell id="MoF0sNrf8hHGNL5cvn2d-21" value="Пользователь&#xa;выбирает задачу?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
                     <mxGeometry x="-625" y="700" width="180" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="MoF0sNrf8hHGNL5cvn2d-22" value="" style="endArrow=classic;html=1;" parent="1" source="MoF0sNrf8hHGNL5cvn2d-17" target="MoF0sNrf8hHGNL5cvn2d-21" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="MoF0sNrf8hHGNL5cvn2d-23" value="Выбирает результат&lt;br&gt;для просмотра" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                <mxCell id="MoF0sNrf8hHGNL5cvn2d-23" value="Выбирает задачу&lt;br&gt;для просмотра" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
                     <mxGeometry x="-620" y="820" width="170" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="MoF0sNrf8hHGNL5cvn2d-24" value="[Да]" style="endArrow=classic;html=1;" parent="1" source="MoF0sNrf8hHGNL5cvn2d-21" target="MoF0sNrf8hHGNL5cvn2d-23" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="MoF0sNrf8hHGNL5cvn2d-25" value="Показывает детали&lt;br&gt;выбранного результата" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                <mxCell id="MoF0sNrf8hHGNL5cvn2d-25" value="Показывает детали&lt;br&gt;выбранной задачи" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="-620" y="900" width="170" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="MoF0sNrf8hHGNL5cvn2d-26" value="" style="endArrow=classic;html=1;" parent="1" source="MoF0sNrf8hHGNL5cvn2d-23" target="MoF0sNrf8hHGNL5cvn2d-25" edge="1">
@@ -458,8 +458,123 @@
             </root>
         </mxGraphModel>
     </diagram>
+    <diagram name="Создание зависимости" id="activity-create-dependency">
+        <mxGraphModel dx="773" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1200" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title-dep" value="Создание зависимости между задачами" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="150" y="20" width="600" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="precondition-dep" value="Предусловие:&#xa;• Пользователь авторизован&#xa;• Является участником проекта&#xa;• В проекте существует минимум 2 задачи" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="60" width="220" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-dep-group" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="820" y="170" width="200" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-dep-box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;dashed=1;" parent="legend-dep-group" vertex="1">
+                    <mxGeometry width="200" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-dep-title" value="Легенда" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="legend-dep-group" vertex="1">
+                    <mxGeometry y="5" width="200" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-dep-student" value="Действие студента" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" parent="legend-dep-group" vertex="1">
+                    <mxGeometry x="10" y="35" width="180" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-dep-system" value="Действие системы" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" parent="legend-dep-group" vertex="1">
+                    <mxGeometry x="10" y="70" width="180" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-dep-decision" value="Условия" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" parent="legend-dep-group" vertex="1">
+                    <mxGeometry x="30" y="100" width="140" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="start-dep" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="455" y="70" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dep-1" value="Открывает страницу проекта" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="140" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-1" value="" style="endArrow=classic;html=1;" parent="1" source="start-dep" target="act-dep-1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dep-2" value="Отображает список задач&#xa;с кнопкой &quot;Управление зависимостями&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="230" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-2" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-1" target="act-dep-2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dep-3" value="Нажимает кнопку&#xa;&quot;Управление зависимостями&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="330" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-3" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-2" target="act-dep-3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dep-4" value="Отображает интерфейс:&#xa;• Список задач&#xa;• Выпадающие списки для выбора&#xa;• Кнопка &quot;Добавить зависимость&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="420" width="160" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-4" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-3" target="act-dep-4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dep-5" value="Выбирает:&#xa;• Задача A (зависимая)&#xa;• Задача B (от которой зависит)&#xa;Тип: FINISH_TO_START" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="540" width="160" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-5" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-4" target="act-dep-5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dep-6" value="Нажимает кнопку&#xa;&quot;Добавить зависимость&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="660" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-6" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-5" target="act-dep-6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dep-7" value="Проверяет:&#xa;• Задачи выбраны&#xa;• A ≠ B (не сама на себя)&#xa;• Зависимость ещё не существует&#xa;• Добавление не создаст цикл" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="750" width="160" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-7" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-6" target="act-dep-7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="decision-dep-1" value="" style="rhombus;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="880" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-8" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-7" target="decision-dep-1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dep-8" value="Показывает ошибку:&#xa;• &quot;Цикл зависимостей&quot;&#xa;• &quot;Зависимость уже существует&quot;&#xa;• &quot;Выберите разные задачи&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="615" y="855" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-9" value="[Не валидно]" style="endArrow=classic;html=1;" parent="1" source="decision-dep-1" target="act-dep-8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-10" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-8" target="act-dep-5" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="820" y="895"/>
+                            <mxPoint x="820" y="585"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="act-dep-9" value="Создаёт запись Dependency&#xa;в базе данных" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="940" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-11" value="[Валидно]" style="endArrow=classic;html=1;" parent="1" source="decision-dep-1" target="act-dep-9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="act-dep-10" value="Обновляет список зависимостей&#xa;с уведомлением &quot;Зависимость создана&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="395" y="1030" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-12" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-9" target="act-dep-10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="end-dep" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="455" y="1130" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-dep-13" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-10" target="end-dep" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
     <diagram name="Построение диаграммы Ганта" id="activity-build-gantt">
-        <mxGraphModel dx="1033" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1400" math="0" shadow="0">
+        <mxGraphModel dx="773" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1400" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -504,7 +619,7 @@
                 <mxCell id="edge-gantt-3" value="" style="endArrow=classic;html=1;" parent="1" source="act-gantt-2" target="act-gantt-3" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="act-gantt-4" value="Проверяет:&#xa;• наличие результатов в проекте&#xa;• наличие зависимостей" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                <mxCell id="act-gantt-4" value="Проверяет:&#xa;• наличие задач в проекте&#xa;• наличие зависимостей" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="390" y="360" width="160" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="edge-gantt-4" value="" style="endArrow=classic;html=1;" parent="1" source="act-gantt-3" target="act-gantt-4" edge="1">
@@ -516,10 +631,10 @@
                 <mxCell id="edge-gantt-5" value="" style="endArrow=classic;html=1;" parent="1" source="act-gantt-4" target="decision-gantt-1" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="act-gantt-5" value="Показывает сообщение:&#xa;&quot;Нет результатов для&#xa;построения диаграммы&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                <mxCell id="act-gantt-5" value="Показывает сообщение:&#xa;&quot;Нет задач для&#xa;построения диаграммы&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="720" y="445" width="160" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="edge-gantt-6" value="[Нет результатов или зависимостей]" style="endArrow=classic;html=1;" parent="1" source="decision-gantt-1" target="act-gantt-5" edge="1">
+                <mxCell id="edge-gantt-6" value="[Нет задач или зависимостей]" style="endArrow=classic;html=1;" parent="1" source="decision-gantt-1" target="act-gantt-5" edge="1">
                     <mxGeometry x="-0.0213" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
@@ -531,10 +646,10 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="act-gantt-6" value="Получает все результаты&#xa;проекта с зависимостями&#xa;и дедлайнами" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                <mxCell id="act-gantt-6" value="Получает все задачи&#xa;проекта с зависимостями&#xa;и дедлайнами" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="390" y="520" width="160" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="edge-gantt-8" value="[Есть результаты]" style="endArrow=classic;html=1;" parent="1" source="decision-gantt-1" target="act-gantt-6" edge="1">
+                <mxCell id="edge-gantt-8" value="[Есть задачи]" style="endArrow=classic;html=1;" parent="1" source="decision-gantt-1" target="act-gantt-6" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="edge-gantt-10" value="" style="endArrow=classic;html=1;" parent="1" source="act-gantt-6" target="act-gantt-9" edge="1">
@@ -545,13 +660,13 @@
                 <mxCell id="act-gantt-9" value="Выполняет топологическую&#xa;сортировку графа зависимостей&#xa;(алгоритм DFS/Кана)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="390" y="640" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="act-gantt-10" value="Вычисляет даты начала&#xa;для каждого результата:&#xa;• идёт от дедлайнов назад&#xa;• учитывает длительность&#xa;• учитывает зависимости" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                <mxCell id="act-gantt-10" value="Вычисляет даты начала&#xa;для каждой задачи:&#xa;• идёт от дедлайнов назад&#xa;• учитывает длительность&#xa;• учитывает зависимости" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="390" y="750" width="160" height="110" as="geometry"/>
                 </mxCell>
                 <mxCell id="edge-gantt-14" value="" style="endArrow=classic;html=1;" parent="1" source="act-gantt-9" target="act-gantt-10" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="act-gantt-11" value="Формирует JSON с данными:&#xa;• название результата&#xa;• дата начала&#xa;• дата окончания (дедлайн)&#xa;• ответственные&#xa;• статус" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                <mxCell id="act-gantt-11" value="Формирует JSON с данными:&#xa;• название задачи&#xa;• дата начала&#xa;• дата окончания (дедлайн)&#xa;• ответственные&#xa;• статус" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="390" y="890" width="160" height="110" as="geometry"/>
                 </mxCell>
                 <mxCell id="edge-gantt-15" value="" style="endArrow=classic;html=1;" parent="1" source="act-gantt-10" target="act-gantt-11" edge="1">
@@ -567,121 +682,6 @@
                     <mxGeometry x="450" y="1170" width="40" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="edge-gantt-17" value="" style="endArrow=classic;html=1;" parent="1" source="act-gantt-12" target="end-gantt" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-            </root>
-        </mxGraphModel>
-    </diagram>
-    <diagram name="Создание зависимости" id="activity-create-dependency">
-        <mxGraphModel dx="1033" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1200" math="0" shadow="0">
-            <root>
-                <mxCell id="0"/>
-                <mxCell id="1" parent="0"/>
-                <mxCell id="title-dep" value="Создание зависимости между результатами" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" parent="1" vertex="1">
-                    <mxGeometry x="150" y="20" width="600" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="precondition-dep" value="Предусловие:&#xa;• Пользователь авторизован&#xa;• Является участником проекта&#xa;• В проекте существует минимум 2 результата" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;verticalAlign=top;fontSize=10;" parent="1" vertex="1">
-                    <mxGeometry x="820" y="60" width="220" height="90" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-dep-group" value="" style="group" parent="1" vertex="1" connectable="0">
-                    <mxGeometry x="820" y="170" width="200" height="130" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-dep-box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;dashed=1;" parent="legend-dep-group" vertex="1">
-                    <mxGeometry width="200" height="130" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-dep-title" value="Легенда" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="legend-dep-group" vertex="1">
-                    <mxGeometry y="5" width="200" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-dep-student" value="Действие студента" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" parent="legend-dep-group" vertex="1">
-                    <mxGeometry x="10" y="35" width="180" height="25" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-dep-system" value="Действие системы" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" parent="legend-dep-group" vertex="1">
-                    <mxGeometry x="10" y="70" width="180" height="25" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-dep-decision" value="Условия" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" parent="legend-dep-group" vertex="1">
-                    <mxGeometry x="30" y="100" width="140" height="25" as="geometry"/>
-                </mxCell>
-                <mxCell id="start-dep" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="455" y="70" width="40" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="act-dep-1" value="Открывает страницу проекта" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="140" width="160" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-1" value="" style="endArrow=classic;html=1;" parent="1" source="start-dep" target="act-dep-1" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="act-dep-2" value="Отображает список результатов&#xa;с кнопкой &quot;Управление зависимостями&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="230" width="160" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-2" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-1" target="act-dep-2" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="act-dep-3" value="Нажимает кнопку&#xa;&quot;Управление зависимостями&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="330" width="160" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-3" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-2" target="act-dep-3" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="act-dep-4" value="Отображает интерфейс:&#xa;• Список результатов&#xa;• Выпадающие списки для выбора&#xa;• Кнопка &quot;Добавить зависимость&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="420" width="160" height="90" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-4" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-3" target="act-dep-4" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="act-dep-5" value="Выбирает:&#xa;• Результат A (зависимый)&#xa;• Результат B (от которого зависит)&#xa;Тип: FINISH_TO_START" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="540" width="160" height="90" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-5" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-4" target="act-dep-5" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="act-dep-6" value="Нажимает кнопку&#xa;&quot;Добавить зависимость&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="660" width="160" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-6" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-5" target="act-dep-6" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="act-dep-7" value="Проверяет:&#xa;• Результаты выбраны&#xa;• A ≠ B (не сам на себя)&#xa;• Зависимость ещё не существует&#xa;• Добавление не создаст цикл" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="750" width="160" height="100" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-7" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-6" target="act-dep-7" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="decision-dep-1" value="" style="rhombus;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="460" y="880" width="30" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-8" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-7" target="decision-dep-1" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="act-dep-8" value="Показывает ошибку:&#xa;• &quot;Цикл зависимостей&quot;&#xa;• &quot;Зависимость уже существует&quot;&#xa;• &quot;Выберите разные результаты&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-                    <mxGeometry x="615" y="855" width="180" height="80" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-9" value="[Не валидно]" style="endArrow=classic;html=1;" parent="1" source="decision-dep-1" target="act-dep-8" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-10" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-8" target="act-dep-5" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="820" y="895"/>
-                            <mxPoint x="820" y="585"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="act-dep-9" value="Создаёт запись Dependency&#xa;в базе данных" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="940" width="160" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-11" value="[Валидно]" style="endArrow=classic;html=1;" parent="1" source="decision-dep-1" target="act-dep-9" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="act-dep-10" value="Обновляет список зависимостей&#xa;с уведомлением &quot;Зависимость создана&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="1030" width="160" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-12" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-9" target="act-dep-10" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="end-dep" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="455" y="1130" width="40" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge-dep-13" value="" style="endArrow=classic;html=1;" parent="1" source="act-dep-10" target="end-dep" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
             </root>

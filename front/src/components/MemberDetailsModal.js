@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { updateMemberRole } from '../api/results';
-import { getMemberResults } from '../api/results';
+import { updateMemberRole } from '../api/tasks';
+import { getMemberTasks } from '../api/tasks';
 import { useNavigate } from 'react-router-dom';
 import { getStatusLabel } from '../utils/taskUtils';
 import './MemberDetailsModal.css';
@@ -18,7 +18,7 @@ function MemberDetailsModal({ projectId, member, onClose, onRoleUpdated }) {
     const loadTasks = async () => {
       setLoading(true);
       try {
-        const data = await getMemberResults(projectId, member.id);
+        const data = await getMemberTasks(projectId, member.id);
         setTasks(data);
       } catch (err) {
         setError(err.message || 'Ошибка загрузки задач');

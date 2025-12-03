@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class ResultDto {
+public class TaskDto {
 
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ResultSummary {
+    public static class TaskSummary {
         private Long id;
         private String title;
         private String description;
@@ -43,7 +43,7 @@ public class ResultDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ResultDetails {
+    public static class TaskDetails {
         private Long id;
         private String title;
         private String description;
@@ -62,8 +62,8 @@ public class ResultDto {
     @AllArgsConstructor
     public static class DependencyInfo {
         private Long id;
-        private Long requiredResultId;
-        private String requiredResultTitle;
+        private Long requiredTaskId;
+        private String requiredTaskTitle;
         private String dependencyType;
     }
 
@@ -115,5 +115,14 @@ public class ResultDto {
     public static class AssignMemberRequest {
         @NotNull(message = "ID участника обязателен")
         private Long memberId;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AssignedStats {
+        private Long total;
+        private Long closed;
+        private Long overdue;
     }
 }

@@ -10,7 +10,7 @@ import com.example.project.exception.BadRequestException;
 import com.example.project.exception.ForbiddenException;
 import com.example.project.exception.NotFoundException;
 import com.example.project.repository.ProjectRepository;
-import com.example.project.repository.ResultRepository;
+import com.example.project.repository.TaskRepository;
 import com.example.project.repository.TeamMemberRepository;
 import com.example.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final TeamMemberRepository teamMemberRepository;
     private final UserRepository userRepository;
-    private final ResultRepository resultRepository;
+    private final TaskRepository taskRepository;
     private final JwtService jwtService;
 
     public List<ProjectDto.ProjectSummary> getMyProjects(String authHeader) {
@@ -184,14 +184,14 @@ public class ProjectService {
         });
 
         // Статистика для назначенных мне
-        long assignedTotal = resultRepository.countAssignedForUserInProject(project, user);
-        long assignedClosed = resultRepository.countCompletedAssignedForUserInProject(project, user);
-        long assignedOverdue = resultRepository.countOverdueAssignedForUserInProject(project, user);
+        long assignedTotal = taskRepository.countAssignedForUserInProject(project, user);
+        long assignedClosed = taskRepository.countCompletedAssignedForUserInProject(project, user);
+        long assignedOverdue = taskRepository.countOverdueAssignedForUserInProject(project, user);
 
         // Статистика для всех в проекте
-        long allTotal = resultRepository.countByProject(project);
-        long allClosed = resultRepository.countCompletedByProject(project);
-        long allOverdue = resultRepository.countOverdueByProject(project);
+        long allTotal = taskRepository.countByProject(project);
+        long allClosed = taskRepository.countCompletedByProject(project);
+        long allOverdue = taskRepository.countOverdueByProject(project);
 
         return ProjectDto.TaskStats.builder()
                 .assigned(ProjectDto.TaskTypeStats.builder()
