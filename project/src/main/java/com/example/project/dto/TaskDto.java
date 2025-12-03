@@ -24,19 +24,7 @@ public class TaskDto {
         private LocalDateTime deadline;
         private String status;
         private Integer priority;
-        private List<AssigneeInfo> assignees;
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class AssigneeInfo {
-        private Long memberId;
-        private Long userId;
-        private String firstName;
-        private String lastName;
-        private String role;
+        private List<TeamMemberDto.MemberInfo> assignees;
     }
 
     @Data
@@ -52,19 +40,9 @@ public class TaskDto {
         private Integer priority;
         private Long projectId;
         private String projectName;
-        private List<AssigneeInfo> assignees;
-        private List<DependencyInfo> dependencies;
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class DependencyInfo {
-        private Long id;
-        private Long requiredTaskId;
-        private String requiredTaskTitle;
-        private String dependencyType;
+        private List<TeamMemberDto.MemberInfo> assignees;
+        private List<DependencyDto.DependencyInfo> dependencies;
+        private DependencyDto.ParentTaskInfo parentTask;
     }
 
     @Data
@@ -84,6 +62,27 @@ public class TaskDto {
 
         @NotNull(message = "Приоритет обязателен")
         private Integer priority;
+
+        private List<Long> assigneeIds; // ID участников проекта для назначения
+
+        private Long parentTaskId; // ID родительской задачи
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CreateResponse {
+        private Long id;
+        private String title;
+        private String description;
+        private LocalDateTime deadline;
+        private String status;
+        private Integer priority;
+        private Long projectId;
+        private String projectName;
+        private List<TeamMemberDto.MemberInfo> assignees;
+        private DependencyDto.ParentTaskInfo parentTask;
     }
 
     @Data
@@ -124,5 +123,14 @@ public class TaskDto {
         private Long total;
         private Long closed;
         private Long overdue;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TaskOption {
+        private Long id;
+        private String title;
     }
 }

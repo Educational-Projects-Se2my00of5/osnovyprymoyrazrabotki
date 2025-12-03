@@ -63,3 +63,53 @@ export async function updateMemberRole(projectId, memberId, newRole) {
         throw new Error(message);
     }
 }
+
+export async function createTask(projectId, taskData) {
+    try {
+        const resp = await apiClient.post(`/projects/${projectId}/tasks`, taskData);
+        return resp.data;
+    } catch (err) {
+        const { message } = normalizeAxiosError(err);
+        throw new Error(message);
+    }
+}
+
+export async function getTask(taskId) {
+    try {
+        const resp = await apiClient.get(`/tasks/${taskId}`);
+        return resp.data;
+    } catch (err) {
+        const { message } = normalizeAxiosError(err);
+        throw new Error(message);
+    }
+}
+
+export async function getProjectMembers(projectId) {
+    try {
+        const resp = await apiClient.get(`/projects/${projectId}/members/options`);
+        return resp.data;
+    } catch (err) {
+        const { message } = normalizeAxiosError(err);
+        throw new Error(message);
+    }
+}
+
+export async function getProjectTasksOptions(projectId) {
+    try {
+        const resp = await apiClient.get(`/projects/${projectId}/tasks/options`);
+        return resp.data;
+    } catch (err) {
+        const { message } = normalizeAxiosError(err);
+        throw new Error(message);
+    }
+}
+
+export async function getMyMemberId(projectId) {
+    try {
+        const resp = await apiClient.get(`/projects/${projectId}/members/me`);
+        return resp.data;
+    } catch (err) {
+        const { message } = normalizeAxiosError(err);
+        throw new Error(message);
+    }
+}

@@ -196,10 +196,12 @@
   padding: 15px;
   background: #f8f9fa;
   transition: box-shadow 0.2s;
+  cursor: pointer;
 }
 
 .task-card:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
 }
 
 .task-card-header {

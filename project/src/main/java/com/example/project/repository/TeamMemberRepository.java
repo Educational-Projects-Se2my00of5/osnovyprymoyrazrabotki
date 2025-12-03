@@ -14,4 +14,5 @@ import org.springframework.stereotype.Repository;
 public interface TeamMemberRepository extends JpaRepository<TeamMember, Long> {
 	List<TeamMember> findByUser(User user);
     Optional<TeamMember> findByUserAndProject(User user, Project project);
+    List<TeamMember> findAllByProject(Project project);
 }

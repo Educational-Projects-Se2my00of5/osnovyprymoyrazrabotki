@@ -199,7 +199,11 @@ function TasksPage() {
               <>
                 <div className="tasks-list">
                   {currentTasks.map((task) => (
-                    <div key={task.id} className="task-card">
+                    <div 
+                      key={task.id} 
+                      className="task-card"
+                      onClick={() => navigate(`/tasks/${task.id}`)}
+                    >
                       <div className="task-card-header">
                         <h4 className="task-title">{task.title}</h4>
                         <span className={`task-status task-status-${task.status?.toLowerCase()}`}>

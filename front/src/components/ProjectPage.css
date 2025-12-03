@@ -294,11 +294,33 @@
   cursor: pointer;
   text-decoration: none;
   font-weight: 600;
+  transition: all 0.2s;
 }
 
 .project-stats-link:hover {
   text-decoration: underline;
   color: #0056b3;
+}
+
+.project-stats-link.disabled {
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.project-stats-link.disabled:hover {
+  text-decoration: none;
+  color: #6c757d;
+}
+
+.project-action-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.project-action-button:disabled:hover {
+  background-color: #6c757d;
 }
 
 /* Placeholder */
@@ -317,4 +339,232 @@
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
+}
+
+/* Create Task Section */
+.project-create-task-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.project-create-task-description {
+  color: #555;
+  text-align: center;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.project-create-task-button {
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+  width: 100%;
+  max-width: 250px;
+}
+
+.project-create-task-button:hover {
+  background-color: #218838;
+}
+
+/* Task Form Styles */
+.project-task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.project-task-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.project-task-label {
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
+
+.project-task-input,
+.project-task-textarea {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.project-task-input:focus,
+.project-task-textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.project-task-textarea {
+  resize: vertical;
+}
+
+.project-task-selected-parent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+}
+
+.project-task-parent-title {
+  color: #333;
+  font-weight: 500;
+}
+
+.project-task-remove-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #856404;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.project-task-remove-button:hover {
+  color: #533f03;
+}
+
+.project-task-add-button {
+  padding: 10px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.project-task-add-button:hover {
+  background-color: #0056b3;
+}
+
+.project-task-assignees-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.project-task-add-assignee-button {
+  padding: 6px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.project-task-add-assignee-button:hover {
+  background-color: #0056b3;
+}
+
+.project-task-assignees-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.project-task-assignees-table thead {
+  background-color: #f8f9fa;
+}
+
+.project-task-assignees-table th,
+.project-task-assignees-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.project-task-assignees-table th {
+  font-weight: 600;
+  color: #495057;
+  font-size: 13px;
+}
+
+.project-task-remove-assignee-button {
+  padding: 4px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.project-task-remove-assignee-button:hover {
+  background-color: #c82333;
+}
+
+.project-task-placeholder {
+  color: #6c757d;
+  font-size: 14px;
+  margin: 10px 0;
+  text-align: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.project-task-create-button {
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.project-task-create-button:hover {
+  background-color: #218838;
+}
+
+.project-task-message {
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.project-task-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.project-task-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
 }
