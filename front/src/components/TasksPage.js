@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { getAllMyTasks, getProjectTasks, getMyTasksInProject, getMemberTasks } from '../api/tasks';
 import { getProject } from '../api/projects';
-import { getStatusLabel, statusFilters, sortOptions, filterTasksByStatus, sortTasks } from '../utils/taskUtils';
+import { getStatusLabel, getPriorityLabel, statusFilters, sortOptions, filterTasksByStatus, sortTasks } from '../utils/taskUtils';
 import './TasksPage.css';
 
 function TasksPage() {
@@ -234,8 +234,21 @@ function TasksPage() {
                         </div>
                         <div className="task-info">
                           <span className="task-info-label">Приоритет:</span>
-                          <span className="task-info-value">{task.priority}</span>
+                          <span className="task-info-value">
+                            {getPriorityLabel(task.priority)}
+                          </span>
                         </div>
+                        {task.parentTask && (
+                          <div className="task-info">
+                            <span className="task-info-label">Родительская задача:</span>
+                            <span className="task-info-value task-parent-link" onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/tasks/${task.parentTask.taskId}`);
+                            }}>
+                              {task.parentTask.taskTitle}
+                            </span>
+                          </div>
+                        )}
                         <div className="task-info">
                           <span className="task-info-label">Исполнители:</span>
                           <span className="task-info-value">

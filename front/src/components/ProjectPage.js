@@ -4,6 +4,7 @@ import { getProject, getProjectTaskStats, removeMemberFromProject, deleteProject
 import { createTask, getMyMemberId } from '../api/tasks';
 import { getProfile } from '../api/user';
 import { getStatusLabel } from '../utils/projectUtils';
+import { taskPriorities } from '../utils/taskUtils';
 import EditProjectModal from './EditProjectModal';
 import AddMemberModal from './AddMemberModal';
 import MemberDetailsModal from './MemberDetailsModal';
@@ -35,7 +36,7 @@ function ProjectPage() {
     title: '',
     description: '',
     deadline: '',
-    priority: 0
+    priority: ''
   });
   const [taskAssignees, setTaskAssignees] = useState([]);
   const [parentTask, setParentTask] = useState(null);
@@ -135,6 +136,10 @@ function ProjectPage() {
       setTaskCreateMessage({ text: 'Необходимо указать дедлайн', type: 'error' });
       return;
     }
+    if (taskAssignees.length === 0) {
+      setTaskCreateMessage({ text: 'Необходимо назначить хотя бы одного исполнителя', type: 'error' });
+      return;
+    }
 
     try {
       // Устанавливаем время на 23:59:59 текущего дня
@@ -145,7 +150,7 @@ function ProjectPage() {
         title: newTask.title.trim(),
         description: newTask.description.trim() || null,
         deadline: deadlineDate.toISOString(),
-        priority: parseInt(newTask.priority, 10),
+        priority: newTask.priority,
         assigneeIds: taskAssignees.map(a => a.memberId),
         parentTaskId: parentTask ? parentTask.id : null
       };
@@ -153,7 +158,7 @@ function ProjectPage() {
       await createTask(projectId, taskData);
       
       // Сброс формы
-      setNewTask({ title: '', description: '', deadline: '', priority: 0 });
+      setNewTask({ title: '', description: '', deadline: '', priority: '' });
       setTaskAssignees([]);
       setParentTask(null);
       setTaskCreateMessage({ text: 'Задача успешно создана!', type: 'success' });
@@ -404,15 +409,15 @@ function ProjectPage() {
 
               <div className="project-task-input-group">
                 <label className="project-task-label">Приоритет</label>
-                <input
-                  type="number"
+                <select
                   value={newTask.priority}
                   onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
-                  min={0}
-                  max={10}
                   className="project-task-input"
-                  placeholder="0-10 (0 = низкий, 10 = высокий)"
-                />
+                >
+                  {taskPriorities.map(p => (
+                    <option key={p.value} value={p.value}>{p.label}</option>
+                  ))}
+                </select>
               </div>
 
               {/* Родительская задача */}

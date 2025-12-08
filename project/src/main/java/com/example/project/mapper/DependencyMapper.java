@@ -15,5 +15,9 @@ public interface DependencyMapper {
 
     @Mapping(target = "taskId", source = "id")
     @Mapping(target = "taskTitle", source = "title")
+    DependencyDto.DependencyInfo toDependencyInfoFromTask(Task task);
+
+    @Mapping(target = "taskId", source = "id")
+    @Mapping(target = "taskTitle", source = "title")
     DependencyDto.ParentTaskInfo toParentTaskInfo(Task task);
 }

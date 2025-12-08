@@ -113,3 +113,13 @@ export async function getMyMemberId(projectId) {
         throw new Error(message);
     }
 }
+
+export async function updateTask(taskId, taskData) {
+    try {
+        const resp = await apiClient.put(`/tasks/${taskId}`, taskData);
+        return resp.data;
+    } catch (err) {
+        const { message } = normalizeAxiosError(err);
+        throw new Error(message);
+    }
+}

@@ -8,14 +8,15 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {TeamMemberMapper.class})
+@Mapper(componentModel = "spring", uses = {TeamMemberMapper.class, DependencyMapper.class})
 public interface TaskMapper {
 
-    @Mapping(target = "status", expression = "java(task.getStatus().name())")
-    @Mapping(target = "assignees", source = "assignedMembers")
-    TaskDto.TaskSummary toTaskSummary(Task task);
+    @Mapping(target = "status", expression = "java(task.getStatus())")
+    @Mapping(target = "assignees", source = "task.assignedMembers")
+    @Mapping(target = "parentTask", source = "parentTask")
+    TaskDto.TaskSummary toTaskSummary(Task task, DependencyDto.ParentTaskInfo parentTask);
 
-    @Mapping(target = "status", expression = "java(task.getStatus().name())")
+    @Mapping(target = "status", expression = "java(task.getStatus())")
     @Mapping(target = "projectId", source = "task.project.id")
     @Mapping(target = "projectName", source = "task.project.name")
     @Mapping(target = "assignees", source = "task.assignedMembers")
@@ -23,7 +24,7 @@ public interface TaskMapper {
     @Mapping(target = "parentTask", source = "parentTask")
     TaskDto.TaskDetails toTaskDetails(Task task, List<DependencyDto.DependencyInfo> dependencies, DependencyDto.ParentTaskInfo parentTask);
 
-    @Mapping(target = "status", expression = "java(task.getStatus().name())")
+    @Mapping(target = "status", expression = "java(task.getStatus())")
     @Mapping(target = "projectId", source = "task.project.id")
     @Mapping(target = "projectName", source = "task.project.name")
     @Mapping(target = "assignees", source = "task.assignedMembers")

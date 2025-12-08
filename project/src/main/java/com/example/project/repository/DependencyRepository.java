@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface DependencyRepository extends JpaRepository<Dependency, Long> {
-    List<Dependency> findByRequiredTask(Task requiredTask);
-    Optional<Dependency> findByDependentTask(Task dependentTask);
+    Optional<Dependency> findByRequiredTask(Task requiredTask);
+    List<Dependency> findByDependentTask(Task dependentTask);
 }

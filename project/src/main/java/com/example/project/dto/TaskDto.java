@@ -1,6 +1,9 @@
 package com.example.project.dto;
 
+import com.example.project.entity.enums.TaskStatus;
+import com.example.project.entity.enums.TaskPriority;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -22,9 +25,10 @@ public class TaskDto {
         private String title;
         private String description;
         private LocalDateTime deadline;
-        private String status;
-        private Integer priority;
+        private TaskStatus status;
+        private TaskPriority priority;
         private List<TeamMemberDto.MemberInfo> assignees;
+        private DependencyDto.ParentTaskInfo parentTask;
     }
 
     @Data
@@ -36,8 +40,8 @@ public class TaskDto {
         private String title;
         private String description;
         private LocalDateTime deadline;
-        private String status;
-        private Integer priority;
+        private TaskStatus status;
+        private TaskPriority priority;
         private Long projectId;
         private String projectName;
         private List<TeamMemberDto.MemberInfo> assignees;
@@ -61,7 +65,7 @@ public class TaskDto {
         private LocalDateTime deadline;
 
         @NotNull(message = "Приоритет обязателен")
-        private Integer priority;
+        private TaskPriority priority;
 
         private List<Long> assigneeIds; // ID участников проекта для назначения
 
@@ -77,8 +81,8 @@ public class TaskDto {
         private String title;
         private String description;
         private LocalDateTime deadline;
-        private String status;
-        private Integer priority;
+        private TaskStatus status;
+        private TaskPriority priority;
         private Long projectId;
         private String projectName;
         private List<TeamMemberDto.MemberInfo> assignees;
@@ -101,10 +105,15 @@ public class TaskDto {
         private LocalDateTime deadline;
 
         @NotNull(message = "Приоритет обязателен")
-        private Integer priority;
+        private TaskPriority priority;
 
-        @NotBlank(message = "Статус обязателен")
-        private String status;
+        @NotNull(message = "Статус обязателен")
+        private TaskStatus status;
+
+        @NotEmpty(message = "Необходимо назначить хотя бы одного исполнителя")
+        private List<Long> assigneeIds;
+
+        private Long parentTaskId; // null = удалить родителя, отсутствует = не менять
     }
 
     @Data

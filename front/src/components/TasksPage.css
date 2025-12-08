@@ -291,6 +291,17 @@
   word-break: break-word;
 }
 
+.task-parent-link {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.task-parent-link:hover {
+  color: #0056b3;
+}
+
 /* Pagination */
 .tasks-pagination {
   display: flex;

@@ -8,9 +8,10 @@ import com.example.project.entity.Project;
 import com.example.project.entity.Task;
 import com.example.project.entity.TeamMember;
 import com.example.project.entity.User;
+import com.example.project.entity.enums.TaskStatus;
+import com.example.project.exception.BadRequestException;
 import com.example.project.exception.ForbiddenException;
 import com.example.project.exception.NotFoundException;
-import com.example.project.mapper.DependencyMapper;
 import com.example.project.mapper.TaskMapper;
 import com.example.project.mapper.TeamMemberMapper;
 import com.example.project.repository.DependencyRepository;
@@ -35,36 +36,16 @@ public class TaskService {
     private final TeamMemberRepository teamMemberRepository;
     private final UserRepository userRepository;
     private final DependencyRepository dependencyRepository;
+    private final DependencyService dependencyService;
     private final JwtService jwtService;
     private final TaskMapper taskMapper;
     private final TeamMemberMapper teamMemberMapper;
-    private final DependencyMapper dependencyMapper;
 
-    /**
-     * Проверяет доступ пользователя к проекту
-     * @return найденный проект
-     */
-    private Project verifyProjectAccessAndGet(String authHeader, Long projectId) {
-        User user = getUserFromAuthHeader(authHeader);
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new NotFoundException("Проект не найден"));
-
-        teamMemberRepository.findByUserAndProject(user, project)
-                .orElseThrow(() -> new ForbiddenException("Пользователь не является участником проекта"));
-
-        return project;
-    }
-
-    private User getUserFromAuthHeader(String authHeader) {
-        String email = jwtService.extractEmailFromHeader(authHeader);
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-    }
 
     public List<TaskDto.TaskSummary> getProjectTasks(String authHeader, Long projectId) {
         Project project = verifyProjectAccessAndGet(authHeader, projectId);
         List<Task> tasks = taskRepository.findByProject(project);
-        return tasks.stream().map(taskMapper::toTaskSummary).collect(Collectors.toList());
+        return toListTaskSummary(tasks);
     }
 
     public List<TaskDto.TaskSummary> getMyTasksInProject(String authHeader, Long projectId) {
@@ -72,7 +53,7 @@ public class TaskService {
 
         Project project = verifyProjectAccessAndGet(authHeader, projectId);
         List<Task> tasks = taskRepository.findByProjectAndAssignedUser(project, user);
-        return tasks.stream().map(taskMapper::toTaskSummary).collect(Collectors.toList());
+        return toListTaskSummary(tasks);
     }
 
     public List<TaskDto.TaskSummary> getMemberTasks(String authHeader, Long projectId, Long memberId) {
@@ -85,14 +66,14 @@ public class TaskService {
                 .orElseThrow(() -> new ForbiddenException("Участник не принадлежит данному проекту"));
 
         List<Task> tasks = taskRepository.findByAssignedMember(member);
-        return tasks.stream().map(taskMapper::toTaskSummary).collect(Collectors.toList());
+        return toListTaskSummary(tasks);
     }
 
     public List<TaskDto.TaskSummary> getMyTasks(String authHeader) {
         User user = getUserFromAuthHeader(authHeader);
 
         List<Task> tasks = taskRepository.findByAssignedUser(user);
-        return tasks.stream().map(taskMapper::toTaskSummary).collect(Collectors.toList());
+        return toListTaskSummary(tasks);
     }
 
     public TaskDto.AssignedStats getMyTaskStats(String authHeader) {
@@ -139,18 +120,7 @@ public class TaskService {
         if (request.getParentTaskId() != null) {
             Task parentTask = taskRepository.findById(request.getParentTaskId())
                     .orElseThrow(() -> new NotFoundException("Родительская задача не найдена"));
-
-            if (!parentTask.getProject().getId().equals(projectId)) {
-                throw new ForbiddenException("Родительская задача не принадлежит данному проекту");
-            }
-
-            Dependency dependency = Dependency.builder()
-                    .requiredTask(parentTask)
-                    .dependentTask(saved)
-                    .build();
-
-            dependencyRepository.save(dependency);
-            parentTaskInfo = dependencyMapper.toParentTaskInfo(parentTask);
+            parentTaskInfo = dependencyService.createDependency(saved, parentTask);
         }
 
         return taskMapper.toCreateResponse(saved, parentTaskInfo);
@@ -161,18 +131,12 @@ public class TaskService {
                 .orElseThrow(() -> new NotFoundException("Задача не найдена"));
 
         verifyProjectAccessAndGet(authHeader, task.getProject().getId());
-    
-        // Заполняем зависимости (дочерние задачи) - ищем где task является requiredTask
-        List<DependencyDto.DependencyInfo> dependencies = dependencyRepository.findByRequiredTask(task)
-                .stream()
-                .map(dependencyMapper::toDependencyInfo)
-                .collect(Collectors.toList());
 
-        // Заполняем родительскую задачу - ищем где task является dependentTask
-        DependencyDto.ParentTaskInfo parentTaskInfo = dependencyRepository.findByDependentTask(task)
-                .map(Dependency::getRequiredTask)
-                .map(dependencyMapper::toParentTaskInfo)
-                .orElse(null);
+        // Заполняем зависимости (дочерние задачи)
+        List<DependencyDto.DependencyInfo> dependencies = dependencyService.getChildDependencies(task);
+
+        // Заполняем родительскую задачу
+        DependencyDto.ParentTaskInfo parentTaskInfo = dependencyService.getParentTaskInfo(task);
 
         return taskMapper.toTaskDetails(task, dependencies, parentTaskInfo);
     }
@@ -183,12 +147,16 @@ public class TaskService {
         return members.stream().map(teamMemberMapper::toMemberInfo).collect(Collectors.toList());
     }
 
+
+    // Получение вариантов задач для выпадающего списка
+    // id, title
     public List<TaskDto.TaskOption> getProjectTaskOptions(String authHeader, Long projectId) {
         Project project = verifyProjectAccessAndGet(authHeader, projectId);
         List<Task> tasks = taskRepository.findByProject(project);
         return tasks.stream().map(taskMapper::toTaskOption).collect(Collectors.toList());
     }
 
+    // Получение memberId из проекта для текущего пользователя
     public Long getMyMemberId(String authHeader, Long projectId) {
         String email = jwtService.extractEmailFromHeader(authHeader);
         User user = userRepository.findByEmail(email)
@@ -202,4 +170,100 @@ public class TaskService {
 
         return member.getId();
     }
+
+    @Transactional
+    public TaskDto.TaskDetails updateTask(String authHeader, Long taskId, TaskDto.UpdateRequest request) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new NotFoundException("Задача не найдена"));
+
+        verifyProjectAccessAndGet(authHeader, task.getProject().getId());
+
+        // Проверка изменения статуса с учётом зависимостей
+        TaskStatus newStatus = request.getStatus();
+        validateStatusChange(task, newStatus);
+
+        // Обновляем поля задачи
+        task.setTitle(request.getTitle());
+        task.setDescription(request.getDescription());
+        task.setDeadline(request.getDeadline());
+        task.setPriority(request.getPriority());
+        task.setStatus(newStatus);
+
+        // Валидация дедлайна с учётом существующих зависимостей (родитель/дочерние)
+        dependencyService.validateTaskDeadlineUpdate(task);
+
+        // Обновляем исполнителей
+        if (request.getAssigneeIds() != null && !request.getAssigneeIds().isEmpty()) {
+            List<TeamMember> assignees = teamMemberRepository.findAllById(request.getAssigneeIds());
+            // Проверяем, что все участники принадлежат проекту задачи
+            for (TeamMember member : assignees) {
+                if (!member.getProject().getId().equals(task.getProject().getId())) {
+                    throw new ForbiddenException("Участник " + member.getId() + " не принадлежит проекту задачи");
+                }
+            }
+            task.setAssignedMembers(assignees);
+        }
+
+        // Обновляем родительскую задачу (зависимость)
+        Task newParentTask = null;
+        if (request.getParentTaskId() != null) {
+            newParentTask = taskRepository.findById(request.getParentTaskId())
+                    .orElseThrow(() -> new NotFoundException("Родительская задача не найдена"));
+        }
+        dependencyService.updateDependency(task, newParentTask);
+
+        Task updated = taskRepository.save(task);
+
+        // Получаем зависимости и родительскую задачу для ответа
+        List<DependencyDto.DependencyInfo> dependencies = dependencyService.getChildDependencies(updated);
+        DependencyDto.ParentTaskInfo parentTaskInfo = dependencyService.getParentTaskInfo(updated);
+
+        return taskMapper.toTaskDetails(updated, dependencies, parentTaskInfo);
+    }
+
+    /**
+     * Проверяет доступ пользователя к проекту
+     */
+    private Project verifyProjectAccessAndGet(String authHeader, Long projectId) {
+        User user = getUserFromAuthHeader(authHeader);
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Проект не найден"));
+
+        teamMemberRepository.findByUserAndProject(user, project)
+                .orElseThrow(() -> new ForbiddenException("Пользователь не является участником проекта"));
+
+        return project;
+    }
+
+    private User getUserFromAuthHeader(String authHeader) {
+        String email = jwtService.extractEmailFromHeader(authHeader);
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+    }
+
+    /**
+     * Валидация изменения статуса задачи
+     * Проверяет, что можно изменить статус на указанный
+     */
+    private void validateStatusChange(Task task, TaskStatus newStatus) {
+        if (newStatus == TaskStatus.COMPLETED) {
+            // Проверяем, что все дочерние задачи завершены
+            // Дочерние задачи - это requiredTask в зависимостях, где task является dependentTask (родителем)
+            List<Dependency> childDependencies = dependencyRepository.findByDependentTask(task);
+            boolean hasUncompletedChildren = childDependencies.stream()
+                    .map(Dependency::getRequiredTask)
+                    .anyMatch(child -> child.getStatus() != TaskStatus.COMPLETED);
+
+            if (hasUncompletedChildren) {
+                throw new BadRequestException("Невозможно завершить задачу: есть незавершённые дочерние задачи");
+            }
+        }
+    }
+
+    private List<TaskDto.TaskSummary> toListTaskSummary(List<Task> tasks) {
+        return tasks.stream()
+                .map(task -> taskMapper.toTaskSummary(task, dependencyService.getParentTaskInfo(task)))
+                .collect(Collectors.toList());
+    }
+
 }

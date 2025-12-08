@@ -220,13 +220,13 @@
 }
 
 .project-delete-member-button {
-  padding: 6px 12px;
+  padding: 4px 10px;
   background-color: #dc3545;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   transition: background-color 0.2s;
 }

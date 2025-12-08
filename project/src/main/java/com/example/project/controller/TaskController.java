@@ -85,4 +85,12 @@ public class TaskController {
                                                             @PathVariable("projectId") Long projectId) {
         return taskService.getProjectTaskOptions(authHeader, projectId);
     }
+
+    @PutMapping("/api/tasks/{taskId}")
+    @ResponseStatus(HttpStatus.OK)
+    public TaskDto.TaskDetails updateTask(@RequestHeader("Authorization") String authHeader,
+                                          @PathVariable("taskId") Long taskId,
+                                          @Valid @RequestBody TaskDto.UpdateRequest request) {
+        return taskService.updateTask(authHeader, taskId, request);
+    }
 }

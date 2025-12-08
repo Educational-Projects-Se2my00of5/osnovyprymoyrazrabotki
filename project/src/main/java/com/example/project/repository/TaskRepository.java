@@ -20,9 +20,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 	@Query("select count(t) from Task t join t.assignedMembers m where m.user = :user and t.status = com.example.project.entity.enums.TaskStatus.COMPLETED")
 	long countCompletedAssignedForUser(@Param("user") User user);
 
-	@Query("select count(t) from Task t join t.assignedMembers m where m.user = :user and t.status = com.example.project.entity.enums.TaskStatus.OVERDUE")
-	long countOverdueAssignedForUser(@Param("user") User user);
-
 	@Query("select count(t) from Task t where t.project = :project")
 	long countByProject(@Param("project") Project project);
 
@@ -32,13 +29,17 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 	@Query("select count(t) from Task t where t.project = :project and t.status = com.example.project.entity.enums.TaskStatus.COMPLETED")
 	long countCompletedByProject(@Param("project") Project project);
 
-	@Query("select count(t) from Task t where t.project = :project and t.status = com.example.project.entity.enums.TaskStatus.OVERDUE")
-	long countOverdueByProject(@Param("project") Project project);
-
 	@Query("select count(t) from Task t join t.assignedMembers m where m.project = :project and m.user = :user and t.status = com.example.project.entity.enums.TaskStatus.COMPLETED")
 	long countCompletedAssignedForUserInProject(@Param("project") Project project, @Param("user") User user);
 
-	@Query("select count(t) from Task t join t.assignedMembers m where m.project = :project and m.user = :user and t.status = com.example.project.entity.enums.TaskStatus.OVERDUE")
+	// Просроченные задачи - по дедлайну, не по статусу
+	@Query("select count(t) from Task t join t.assignedMembers m where m.user = :user and t.status != com.example.project.entity.enums.TaskStatus.COMPLETED and t.deadline < CURRENT_TIMESTAMP")
+	long countOverdueAssignedForUser(@Param("user") User user);
+
+	@Query("select count(t) from Task t where t.project = :project and t.status != com.example.project.entity.enums.TaskStatus.COMPLETED and t.deadline < CURRENT_TIMESTAMP")
+	long countOverdueByProject(@Param("project") Project project);
+
+	@Query("select count(t) from Task t join t.assignedMembers m where m.project = :project and m.user = :user and t.status != com.example.project.entity.enums.TaskStatus.COMPLETED and t.deadline < CURRENT_TIMESTAMP")
 	long countOverdueAssignedForUserInProject(@Param("project") Project project, @Param("user") User user);
 
 	List<Task> findByProject(Project project);

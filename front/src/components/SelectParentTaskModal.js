@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getProjectTasksOptions } from '../api/tasks';
 import './SelectParentTaskModal.css';
 
-function SelectParentTaskModal({ projectId, onClose, onSelect, excludeTaskId = null }) {
+function SelectParentTaskModal({ projectId, onClose, onSelect, excludeTaskIds = [] }) {
   const [allTasks, setAllTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,9 +16,9 @@ function SelectParentTaskModal({ projectId, onClose, onSelect, excludeTaskId = n
       setLoading(true);
       try {
         const data = await getProjectTasksOptions(projectId);
-        // Исключаем текущую задачу, если создаётся
-        const filtered = excludeTaskId 
-          ? data.filter(t => t.id !== excludeTaskId)
+        // Исключаем задачи из массива excludeTaskIds (если передан)
+        const filtered = Array.isArray(excludeTaskIds) && excludeTaskIds.length > 0
+          ? data.filter(t => !excludeTaskIds.includes(t.id))
           : data;
         setAllTasks(filtered);
         setFilteredTasks(filtered);
@@ -29,7 +29,8 @@ function SelectParentTaskModal({ projectId, onClose, onSelect, excludeTaskId = n
       }
     };
     if (projectId) load();
-  }, [projectId, excludeTaskId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectId]);
 
   useEffect(() => {
     const query = searchQuery.toLowerCase().trim();
