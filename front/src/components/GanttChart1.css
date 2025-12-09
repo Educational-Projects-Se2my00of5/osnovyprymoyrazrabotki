@@ -1,0 +1,150 @@
+/* Контейнер DHTMLX Gantt */
+.gantt-container-dhtmlx {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 15px;
+}
+
+/* Легенда */
+.gantt-legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 15px 20px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.gantt-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #555;
+}
+
+.gantt-legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* Пустое состояние */
+.gantt-empty {
+  padding: 60px 20px;
+  text-align: center;
+  color: #999;
+  font-size: 16px;
+}
+
+/* Цвета задач по приоритету - совпадают с GanttChart.js */
+.gantt-task-high .gantt_task_progress {
+  background-color: #c62828 !important;
+}
+
+.gantt-task-high.gantt_task_line,
+.gantt-task-high .gantt_task_line {
+  background-color: #ef5350 !important;
+  border-color: #ef5350 !important;
+}
+
+.gantt-task-normal .gantt_task_progress {
+  background-color: #f9a825 !important;
+}
+
+.gantt-task-normal.gantt_task_line,
+.gantt-task-normal .gantt_task_line {
+  background-color: #ffd54f !important;
+  border-color: #ffd54f !important;
+}
+
+.gantt-task-low .gantt_task_progress {
+  background-color: #1976d2 !important;
+}
+
+.gantt-task-low.gantt_task_line,
+.gantt-task-low .gantt_task_line {
+  background-color: #90caf9 !important;
+  border-color: #90caf9 !important;
+}
+
+/* Переопределяем CSS переменные для задач */
+.gantt-task-high {
+  --dhx-gantt-task-background: #ef5350 !important;
+}
+
+.gantt-task-normal {
+  --dhx-gantt-task-background: #ffd54f !important;
+}
+
+.gantt-task-low {
+  --dhx-gantt-task-background: #90caf9 !important;
+}
+
+/* Просроченные задачи - красная обводка */
+.gantt-task-overdue.gantt_task_line,
+.gantt-task-overdue .gantt_task_line {
+  border: 2px solid #000000 !important;
+  box-shadow: 0 0 8px #000000 !important;
+}
+
+/* Маркер сегодняшнего дня */
+.gantt_task_cell.gantt_task_cell_today,
+.gantt_today {
+  background-color: rgba(74, 144, 226, 0.2) !important;
+}
+
+.gantt_scale_cell.gantt_scale_cell_today {
+  background-color: rgba(74, 144, 226, 0.3) !important;
+  font-weight: bold;
+  color: #1976d2;
+}
+
+/* Курсор-указатель на задачах */
+.gantt_task_line {
+  cursor: pointer !important;
+}
+
+/* Уменьшаем высоту задач */
+.gantt_task_line {
+  height: 30px !important;
+  line-height: 30px !important;
+  margin-top: 7px !important;
+}
+
+.gantt_task_content {
+  line-height: 30px !important;
+}
+
+/* Разнесение задач по слоям (родительские и дочерние) */
+.gantt-layer-1 .gantt_task_line {
+  margin-top: 5px !important;
+}
+
+.gantt-layer-2 .gantt_task_line {
+  margin-top: 20px !important;
+}
+
+/* Скрываем пустые строки */
+.gantt_row[data-task-id="empty-start"],
+.gantt_row[data-task-id="empty-end"] {
+  opacity: 0;
+}
+
+.gantt_task_row[data-task-id="empty-start"] .gantt_task_line,
+.gantt_task_row[data-task-id="empty-end"] .gantt_task_line {
+  display: none !important;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .gantt-legend {
+    flex-direction: column;
+    align-items: center;
+  }
+}

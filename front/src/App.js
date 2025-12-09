@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import ProjectPage from './components/ProjectPage';
 import TasksPage from './components/TasksPage';
 import TaskDetailsPage from './components/TaskDetailsPage';
+import GanttPage from './components/GanttPage';
 import { logout as apiLogout } from './api';
 import { clearAuth, getAccessToken, getRefreshToken } from './api/storage';
 
@@ -51,6 +52,8 @@ function App() {
 
   const TaskDetailsRoute = () => (isAuthenticated() ? <TaskDetailsPage /> : <Navigate to="/login" replace />);
 
+  const GanttRoute = () => (isAuthenticated() ? <GanttPage /> : <Navigate to="/login" replace />);
+
   return (
     <HashRouter>
       <Routes>
@@ -59,6 +62,7 @@ function App() {
         <Route path="/projects/:projectId" element={<ProjectRoute />} />
         <Route path="/projects/:projectId/tasks" element={<TasksRoute />} />
         <Route path="/projects/:projectId/tasks/:userId" element={<TasksRoute />} />
+        <Route path="/projects/:projectId/gantt" element={<GanttRoute />} />
         <Route path="/tasks/:taskId" element={<TaskDetailsRoute />} />
         <Route path="/tasks" element={<TasksRoute />} />
         <Route path="/" element={<DashboardRoute />} />

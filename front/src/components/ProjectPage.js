@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProject, getProjectTaskStats, removeMemberFromProject, deleteProject } from '../api/projects';
 import { createTask, getMyMemberId } from '../api/tasks';
-import { getProfile } from '../api/user';
 import { getStatusLabel } from '../utils/projectUtils';
 import { taskPriorities } from '../utils/taskUtils';
 import EditProjectModal from './EditProjectModal';
@@ -36,7 +35,7 @@ function ProjectPage() {
     title: '',
     description: '',
     deadline: '',
-    priority: ''
+    priority: taskPriorities[0].value
   });
   const [taskAssignees, setTaskAssignees] = useState([]);
   const [parentTask, setParentTask] = useState(null);
@@ -158,7 +157,7 @@ function ProjectPage() {
       await createTask(projectId, taskData);
       
       // Сброс формы
-      setNewTask({ title: '', description: '', deadline: '', priority: '' });
+      setNewTask({ title: '', description: '', deadline: '', priority: taskPriorities[0].value });
       setTaskAssignees([]);
       setParentTask(null);
       setTaskCreateMessage({ text: 'Задача успешно создана!', type: 'success' });
@@ -254,7 +253,7 @@ function ProjectPage() {
                 Мои задачи
               </button>
               <button className="project-action-button" onClick={() => navigate(`/projects/${projectId}/tasks`)}>Все задачи</button>
-              <button className="project-action-button" onClick={() => alert('Диаграмма Ганта (в разработке)')}>Диаграмма Ганта</button>
+              <button className="project-action-button" onClick={() => navigate(`/projects/${projectId}/gantt`)}>Диаграмма Ганта</button>
             </div>
           </div>
 

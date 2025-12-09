@@ -61,6 +61,24 @@
   background-color: #c82333;
 }
 
+.project-gantt-link-button {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 14px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  margin-top: 15px;
+}
+
+.project-gantt-link-button:hover {
+  background-color: #218838;
+}
+
 /* Two-column grid */
 .project-grid {
   display: grid;

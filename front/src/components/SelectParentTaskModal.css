@@ -28,6 +28,7 @@
   align-items: center;
   gap: 8px;
   white-space: nowrap;
+  margin-bottom: 15px;
 }
 
 .select-modal-per-page label {
