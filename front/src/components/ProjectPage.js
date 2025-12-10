@@ -190,7 +190,7 @@ function ProjectPage() {
   if (loading) {
     return (
       <div className="project-page">
-        <p>Загрузка...</p>
+        <p className="dashboard-message">Загрузка...</p>
       </div>
     );
   }
@@ -202,6 +202,13 @@ function ProjectPage() {
       </div>
     );
   }
+
+  // Проверки статуса проекта
+  const isCompleted = project?.status === 'COMPLETED';
+  const isArchived = project?.status === 'ARCHIVED';
+  const canEdit = !isArchived; // Можно редактировать информацию (в т.ч. COMPLETED)
+  const canEditTasks = !isCompleted && !isArchived; // Нельзя создавать/редактировать задачи
+  const canChangeStatus = !isArchived; // Можно менять статус (завершённый можно архивировать)
 
   return (
     <div className="project-page">
@@ -222,7 +229,9 @@ function ProjectPage() {
           <div className="project-section">
             <div className="project-section-header">
               <h2 className="project-section-title">Информация о проекте</h2>
-              <button onClick={handleEditProject} className="project-edit-button">Редактировать</button>
+              {canEdit && (
+                <button onClick={handleEditProject} className="project-edit-button">Редактировать</button>
+              )}
             </div>
             <div className="project-info">
               <div className="project-info-row">
@@ -261,7 +270,9 @@ function ProjectPage() {
           <div className="project-section">
             <div className="project-section-header">
               <h2 className="project-section-title">Участники</h2>
-              <button onClick={handleAddMember} className="project-add-button">Добавить</button>
+              {canEditTasks && (
+                <button onClick={handleAddMember} className="project-add-button">Добавить</button>
+              )}
             </div>
             {project.members && project.members.length > 0 ? (
               <table className="project-table">
@@ -280,13 +291,15 @@ function ProjectPage() {
                       <td onClick={() => handleMemberClick(m)} className="project-table-cell-clickable">{m.lastName}</td>
                       <td onClick={() => handleMemberClick(m)} className="project-table-cell-clickable">{m.role || '—'}</td>
                       <td>
-                        <button 
-                          className="project-delete-member-button" 
-                          onClick={() => handleDeleteMember(m.id)}
-                          title="Удалить участника"
-                        >
-                          Удалить
-                        </button>
+                        {canEditTasks && (
+                          <button 
+                            className="project-delete-member-button" 
+                            onClick={() => handleDeleteMember(m.id)}
+                            title="Удалить участника"
+                          >
+                            Удалить
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -365,9 +378,10 @@ function ProjectPage() {
           </div>
 
           {/* Создание задачи */}
-          <div className="project-section">
-            <h3 className="project-section-title">Создать задачу</h3>
-            <form onSubmit={handleCreateTask} className="project-task-form">
+          {canEditTasks && (
+            <div className="project-section">
+              <h3 className="project-section-title">Создать задачу</h3>
+              <form onSubmit={handleCreateTask} className="project-task-form">
               <div className="project-task-input-group">
                 <label className="project-task-label">Название *</label>
                 <input
@@ -501,6 +515,7 @@ function ProjectPage() {
               )}
             </form>
           </div>
+          )}
         </div>
       </div>
 
@@ -538,6 +553,7 @@ function ProjectPage() {
       {showMemberModal && selectedMember && (
         <MemberDetailsModal
           projectId={projectId}
+          projectStatus={project?.status}
           member={selectedMember}
           onClose={() => {
             setShowMemberModal(false);

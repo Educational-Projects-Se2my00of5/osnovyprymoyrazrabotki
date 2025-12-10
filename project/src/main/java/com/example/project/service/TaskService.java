@@ -8,6 +8,7 @@ import com.example.project.entity.Project;
 import com.example.project.entity.Task;
 import com.example.project.entity.TeamMember;
 import com.example.project.entity.User;
+import com.example.project.entity.enums.ProjectStatus;
 import com.example.project.entity.enums.TaskStatus;
 import com.example.project.exception.BadRequestException;
 import com.example.project.exception.ForbiddenException;
@@ -219,6 +220,34 @@ public class TaskService {
         DependencyDto.ParentTaskInfo parentTaskInfo = dependencyService.getParentTaskInfo(updated);
 
         return taskMapper.toTaskDetails(updated, dependencies, parentTaskInfo);
+    }
+
+    public void deleteTask(String authHeader, Long taskId) {
+        User user = getUserFromAuthHeader(authHeader);
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new NotFoundException("Задача не найдена"));
+
+        // Проверка доступа к проекту
+        Project project = task.getProject();
+        teamMemberRepository.findByUserAndProject(user, project)
+                .orElseThrow(() -> new ForbiddenException("Пользователь не является участником проекта"));
+
+        // Проверка статуса проекта
+        if (project.getStatus() == ProjectStatus.COMPLETED || project.getStatus() == ProjectStatus.ARCHIVED) {
+            throw new BadRequestException("Невозможно удалить задачу из завершённого или архивированного проекта");
+        }
+
+        // Проверка наличия зависимых задач
+        List<Dependency> childDependencies = dependencyRepository.findByDependentTask(task);
+        if (!childDependencies.isEmpty()) {
+            throw new BadRequestException("Невозможно удалить задачу: есть дочерние задачи");
+        }
+
+        // Удаляем зависимости, где эта задача является дочерней
+        dependencyRepository.findByRequiredTask(task).ifPresent(dependencyRepository::delete);
+
+        // Удаляем задачу
+        taskRepository.delete(task);
     }
 
     /**

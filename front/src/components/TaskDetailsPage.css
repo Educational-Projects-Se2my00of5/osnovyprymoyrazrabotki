@@ -62,6 +62,22 @@
   background-color: #0056b3;
 }
 
+.task-details-delete-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.task-details-delete-button:hover {
+  background-color: #c82333;
+}
+
 .task-details-save-button {
   padding: 10px 20px;
   font-size: 14px;

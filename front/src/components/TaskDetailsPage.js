@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getTask, updateTask, getProjectMembers, getProjectTasksOptions } from '../api/tasks';
+import { getTask, updateTask, deleteTask, getProjectMembers, getProjectTasksOptions } from '../api/tasks';
 import { getStatusLabel, getPriorityLabel, isTaskOverdue, taskStatuses, taskPriorities } from '../utils/taskUtils';
 import SelectAssigneeModal from './SelectAssigneeModal';
 import SelectParentTaskModal from './SelectParentTaskModal';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 import './TaskDetailsPage.css';
 
 function TaskDetailsPage() {
@@ -20,6 +21,7 @@ function TaskDetailsPage() {
   const [allProjectMembers, setAllProjectMembers] = useState([]);
   const [showParentTaskModal, setShowParentTaskModal] = useState(false);
   const [allProjectTasks, setAllProjectTasks] = useState([]);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -155,6 +157,15 @@ function TaskDetailsPage() {
     }));
   };
 
+  const handleDeleteTask = async () => {
+    try {
+      await deleteTask(taskId);
+      navigate(`/projects/${task.projectId}`);
+    } catch (err) {
+      setSaveError(err.message || 'Ошибка удаления задачи');
+    }
+  };
+
   const getExcludedTaskIds = () => {
     const excluded = [parseInt(taskId)]; // Сама задача
     
@@ -199,6 +210,11 @@ function TaskDetailsPage() {
     );
   }
 
+  // Проверки статуса проекта
+  const isProjectCompleted = task.projectStatus === 'COMPLETED';
+  const isProjectArchived = task.projectStatus === 'ARCHIVED';
+  const canEditTask = !isProjectCompleted && !isProjectArchived;
+
   return (
     <div className="task-details-page">
       {/* Header */}
@@ -207,9 +223,16 @@ function TaskDetailsPage() {
         <div className="task-details-header-actions">
           {!isEditing ? (
             <>
-              <button onClick={handleEditClick} className="task-details-edit-button">
-                Редактировать
-              </button>
+              {canEditTask && (
+                <>
+                  <button onClick={handleEditClick} className="task-details-edit-button">
+                    Редактировать
+                  </button>
+                  <button onClick={() => setShowDeleteConfirm(true)} className="task-details-delete-button">
+                    Удалить
+                  </button>
+                </>
+              )}
               <button onClick={() => navigate(`/projects/${task.projectId}`)} className="task-details-back-button">
                 К проекту
               </button>
@@ -339,7 +362,7 @@ function TaskDetailsPage() {
         <div className="task-details-section">
           <h2 className="task-details-section-title">
             Исполнители
-            {isEditing && (
+            {isEditing && canEditTask && (
               <button 
                 onClick={() => setShowAssigneeModal(true)} 
                 className="task-details-add-assignee-button"
@@ -362,7 +385,7 @@ function TaskDetailsPage() {
                         <div className="task-details-assignee-role">{assignee.role}</div>
                       )}
                     </div>
-                    {isEditing && (
+                    {isEditing && canEditTask && (
                       <button
                         onClick={() => handleRemoveAssignee(assignee.memberId)}
                         className="task-details-remove-assignee-button"
@@ -387,7 +410,7 @@ function TaskDetailsPage() {
           <div className="task-details-dependency-group">
             <h3 className="task-details-dependency-group-title">
               Родительская задача
-              {isEditing && (
+              {isEditing && canEditTask && (
                 <button 
                   onClick={() => setShowParentTaskModal(true)} 
                   className="task-details-add-dependency-button"
@@ -409,7 +432,7 @@ function TaskDetailsPage() {
                      'Загрузка...'}
                   </div>
                   {!isEditing && <span className="task-details-dependency-arrow">→</span>}
-                  {isEditing && (
+                  {isEditing && canEditTask && (
                     <button
                       onClick={handleRemoveParentTask}
                       className="task-details-remove-assignee-button"
@@ -467,6 +490,16 @@ function TaskDetailsPage() {
           excludeTaskIds={getExcludedTaskIds()}
           onSelect={handleSelectParentTask}
           onClose={() => setShowParentTaskModal(false)}
+        />
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <ConfirmDeleteModal
+          itemName={task.title}
+          itemType="задачу"
+          onConfirm={handleDeleteTask}
+          onCancel={() => setShowDeleteConfirm(false)}
         />
       )}
     </div>

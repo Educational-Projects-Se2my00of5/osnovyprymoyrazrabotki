@@ -3,9 +3,11 @@ package com.example.project.service;
 import com.example.project.dto.ProjectDto;
 import com.example.project.dto.UserDto;
 import com.example.project.entity.Project;
+import com.example.project.entity.Task;
 import com.example.project.entity.TeamMember;
 import com.example.project.entity.User;
 import com.example.project.entity.enums.ProjectStatus;
+import com.example.project.entity.enums.TaskStatus;
 import com.example.project.exception.BadRequestException;
 import com.example.project.exception.ForbiddenException;
 import com.example.project.exception.NotFoundException;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -220,10 +223,39 @@ public class ProjectService {
             throw new ForbiddenException("Пользователь не является участником проекта");
         });
 
+        // Нельзя редактировать архивированный проект
+        if (project.getStatus() == ProjectStatus.ARCHIVED) {
+            throw new BadRequestException("Невозможно редактировать архивированный проект");
+        }
+
+        ProjectStatus newStatus = ProjectStatus.valueOf(req.getStatus());
+
+        // Проверка при переводе в COMPLETED
+        if (newStatus == ProjectStatus.COMPLETED) {
+            List<Task> rootTasks = taskRepository.findRootTasksByProject(project);
+            List<Task> incompleteTasks = rootTasks.stream()
+                    .filter(t -> t.getStatus() != TaskStatus.COMPLETED)
+                    .toList();
+
+            if (!incompleteTasks.isEmpty()) {
+                String titles = incompleteTasks.stream()
+                        .map(Task::getTitle)
+                        .collect(Collectors.joining(", "));
+                throw new BadRequestException(
+                        "Невозможно завершить проект: есть незавершённые корневые задачи: " + titles
+                );
+            }
+        }
+
+        // Проверка при архивации - можно архивировать только завершённый проект
+        if (newStatus == ProjectStatus.ARCHIVED && project.getStatus() != ProjectStatus.COMPLETED) {
+            throw new BadRequestException("Архивировать можно только завершённый проект");
+        }
+
         project.setName(req.getName());
         project.setDescription(req.getDescription());
         project.setSubjectName(req.getSubjectName());
-        project.setStatus(ProjectStatus.valueOf(req.getStatus()));
+        project.setStatus(newStatus);
         projectRepository.save(project);
 
         // Возвращаем обновленные детали
@@ -289,7 +321,35 @@ public class ProjectService {
             throw new BadRequestException("Нельзя удалить последнего участника проекта");
         }
 
+        // Проверяем, является ли участник единственным исполнителем в каких-либо задачах
+        List<Task> tasksWithOnlyThisMember = memberToRemove.getAssignedTasks().stream()
+                .filter(task -> task.getAssignedMembers().size() == 1)
+                .toList();
+
+        if (!tasksWithOnlyThisMember.isEmpty()) {
+            String taskTitles = tasksWithOnlyThisMember.stream()
+                    .map(Task::getTitle)
+                    .collect(Collectors.joining(", "));
+            throw new BadRequestException(
+                    "Невозможно удалить участника: он является единственным исполнителем в задачах: " + taskTitles
+            );
+        }
+
+        for (Task task : new ArrayList<>(memberToRemove.getAssignedTasks())) {
+            task.getAssignedMembers().remove(memberToRemove);
+            taskRepository.save(task); // Сохраняем изменения в задаче
+        }
+
+        // Очищаем список задач у участника
+        memberToRemove.getAssignedTasks().clear();
+
+        project.getTeamMembers().remove(memberToRemove);
+        projectRepository.save(project);
+
+        // Теперь можно безопасно удалить участника
         teamMemberRepository.delete(memberToRemove);
+        teamMemberRepository.flush();
+//        log.info(teamMemberRepository.findByUserAndProject(currentUser, project).isPresent()+"");
     }
 
     public void updateMemberRole(String authHeader, Long projectId, Long memberId, String newRole) {

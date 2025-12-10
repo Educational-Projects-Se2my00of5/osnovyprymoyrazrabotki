@@ -11,6 +11,10 @@ function EditProjectModal({ project, onClose, onSave }) {
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
 
+  // Проверка статуса проекта
+  const isArchived = project.status === 'ARCHIVED';
+  const canChangeInfo = !isArchived; // Архивированный проект нельзя редактировать вообще
+
   const handleSave = async () => {
     // Валидация
     if (!name.trim() || name.length < 3 || name.length > 255) {
@@ -70,6 +74,7 @@ function EditProjectModal({ project, onClose, onSave }) {
               required
               minLength={3}
               maxLength={255}
+              disabled={isArchived}
             />
           </div>
           <div className="modal-input-group">
@@ -82,6 +87,7 @@ function EditProjectModal({ project, onClose, onSave }) {
               required
               minLength={2}
               maxLength={255}
+              disabled={isArchived}
             />
           </div>
           <div className="modal-input-group">
@@ -93,6 +99,7 @@ function EditProjectModal({ project, onClose, onSave }) {
               rows={3}
               maxLength={2000}
               required
+              disabled={isArchived}
             />
           </div>
           <div className="modal-input-group">

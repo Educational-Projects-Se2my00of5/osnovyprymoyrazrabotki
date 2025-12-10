@@ -123,3 +123,12 @@ export async function updateTask(taskId, taskData) {
         throw new Error(message);
     }
 }
+
+export async function deleteTask(taskId) {
+    try {
+        await apiClient.delete(`/tasks/${taskId}`);
+    } catch (err) {
+        const { message } = normalizeAxiosError(err);
+        throw new Error(message);
+    }
+}

@@ -16,12 +16,11 @@ public class RefreshTokenService {
     /**
      * Проверка и валидация refresh токена
      */
-    public RefreshToken verifyRefreshToken(RefreshToken token) {
+    public void verifyRefreshToken(RefreshToken token) {
         if (!jwtService.isTokenValid(token.getToken())) {
             refreshTokenRepository.delete(token);
             throw new AuthenticationException("Refresh token истек или отозван");
         }
-        return token;
     }
 
     /**

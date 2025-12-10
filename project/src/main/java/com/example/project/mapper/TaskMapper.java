@@ -19,6 +19,7 @@ public interface TaskMapper {
     @Mapping(target = "status", expression = "java(task.getStatus())")
     @Mapping(target = "projectId", source = "task.project.id")
     @Mapping(target = "projectName", source = "task.project.name")
+    @Mapping(target = "projectStatus", expression = "java(task.getProject().getStatus())")
     @Mapping(target = "assignees", source = "task.assignedMembers")
     @Mapping(target = "dependencies", source = "dependencies")
     @Mapping(target = "parentTask", source = "parentTask")
@@ -27,6 +28,7 @@ public interface TaskMapper {
     @Mapping(target = "status", expression = "java(task.getStatus())")
     @Mapping(target = "projectId", source = "task.project.id")
     @Mapping(target = "projectName", source = "task.project.name")
+    @Mapping(target = "projectStatus", expression = "java(task.getProject().getStatus())")
     @Mapping(target = "assignees", source = "task.assignedMembers")
     @Mapping(target = "parentTask", source = "parentTask")
     TaskDto.CreateResponse toCreateResponse(Task task, DependencyDto.ParentTaskInfo parentTask);

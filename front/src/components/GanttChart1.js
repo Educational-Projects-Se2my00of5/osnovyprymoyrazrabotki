@@ -89,12 +89,42 @@ function GanttChart1({ tasks, project }) {
     if (tasks && tasks.length > 0 && project) {
       const projectStart = project?.createdAt ? new Date(project.createdAt) : new Date();
       
-      // Сортировка: глобальные задачи первыми
-      const sortedTasks = [...tasks].sort((a, b) => {
-        if (!a.parentTask && b.parentTask) return -1;
-        if (a.parentTask && !b.parentTask) return 1;
-        return a.id - b.id;
-      });
+      // Иерархическая сортировка задач (DFS)
+      const sortTasksHierarchically = (tasks) => {
+        const taskMap = new Map(tasks.map(t => [t.id, t]));
+        const visited = new Set();
+        const sorted = [];
+        
+        // Рекурсивная функция обхода в глубину
+        const dfs = (taskId) => {
+          if (visited.has(taskId)) return;
+          visited.add(taskId);
+          
+          const task = taskMap.get(taskId);
+          if (!task) return;
+          
+          sorted.push(task);
+          
+          // Находим всех детей текущей задачи
+          const children = tasks.filter(t => t.parentTask?.taskId === taskId);
+          children.forEach(child => dfs(child.id));
+        };
+        
+        // Сначала обрабатываем корневые задачи (без родителя)
+        const rootTasks = tasks.filter(t => !t.parentTask);
+        rootTasks.forEach(root => dfs(root.id));
+        
+        // Обрабатываем оставшиеся задачи (на случай циклических зависимостей)
+        tasks.forEach(task => {
+          if (!visited.has(task.id)) {
+            dfs(task.id);
+          }
+        });
+        
+        return sorted;
+      };
+
+      const sortedTasks = sortTasksHierarchically(tasks);
 
       const ganttData = {
         data: [],
@@ -137,7 +167,7 @@ function GanttChart1({ tasks, project }) {
           text: task.title,
           start_date: gantt.date.date_to_str('%Y-%m-%d 00:00:00')(startDate),
           end_date: gantt.date.date_to_str('%Y-%m-%d 23:59:59')(endDate),
-          progress: task.status === 'COMPLETED' ? 1 : (task.status === 'IN_PROGRESS' ? 0.5 : 0),
+          progress: task.status === 'COMPLETED' ? 1 : (task.status === 'IN_PROGRESS' ? 0 : 0),
           priority: task.priority,
           readonly: true,
           depth: getDepthLevel(task, sortedTasks) // Сохраняем уровень вложенности

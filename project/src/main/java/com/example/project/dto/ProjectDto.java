@@ -1,8 +1,5 @@
 package com.example.project.dto;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class ProjectDto {
 
@@ -60,11 +60,11 @@ public class ProjectDto {
         @NotBlank(message = "Название проекта обязательно")
         @Size(min = 3, max = 255, message = "Название от 3 до 255 символов")
         private String name;
-        
+
         @NotBlank(message = "Описание проекта обязательно")
         @Size(max = 1500, message = "Описание не более 1500 символов")
         private String description;
-        
+
         @NotBlank(message = "Предмет обязателен")
         @Size(min = 2, max = 255, message = "Предмет от 2 до 255 символов")
         private String subjectName;
@@ -77,15 +77,15 @@ public class ProjectDto {
         @NotBlank(message = "Название проекта обязательно")
         @Size(min = 3, max = 255, message = "Название от 3 до 255 символов")
         private String name;
-        
+
         @NotBlank(message = "Описание проекта обязательно")
         @Size(max = 2000, message = "Описание не более 2000 символов")
         private String description;
-        
+
         @NotBlank(message = "Предмет обязателен")
         @Size(min = 2, max = 255, message = "Предмет от 2 до 255 символов")
         private String subjectName;
-        
+
         @NotBlank(message = "Статус обязателен")
         private String status;
     }
@@ -115,7 +115,7 @@ public class ProjectDto {
     public static class AddMemberRequest {
         @NotNull(message = "ID пользователя обязателен")
         private Long userId;
-        
+
         @Size(max = 100, message = "Роль не более 100 символов")
         private String role;
     }

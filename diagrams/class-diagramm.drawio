@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Страница — 1" id="LKEvDPNmXckadgfOISKG">
-        <mxGraphModel dx="1120" dy="528" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1236" dy="364" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -13,11 +13,11 @@
                 <mxCell id="1R44wfxZGqEv1HGcwymp-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="1R44wfxZGqEv1HGcwymp-1" vertex="1">
                     <mxGeometry y="130" width="240" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="1R44wfxZGqEv1HGcwymp-4" value="+ addTask(task: Task): void&lt;br&gt;+ getTasks(): List&lt;br&gt;+ addTeamMember(user: User, role: string): void&lt;br&gt;+ removeTeamMember(member: TeamMember): void&lt;br&gt;+ getTeamMembers(): List&lt;br&gt;+ calculateCriticalPath(): List" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="1R44wfxZGqEv1HGcwymp-1" vertex="1">
+                <mxCell id="1R44wfxZGqEv1HGcwymp-4" value="+ addTask(task: Task): void&lt;br&gt;+ getTasks(): List&lt;br&gt;+ addTeamMember(user: User, role: string): void&lt;br&gt;+ removeTeamMember(member: TeamMember): void&lt;br&gt;+ getTeamMembers(): List&lt;div&gt;+ update/delete()&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="1R44wfxZGqEv1HGcwymp-1" vertex="1">
                     <mxGeometry y="138" width="240" height="132" as="geometry"/>
                 </mxCell>
                 <mxCell id="Rlq6Gaoz2o1WRJl_avST-28" value="Task" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="-50" y="240" width="270" height="220" as="geometry"/>
+                    <mxGeometry x="-50" y="240" width="270" height="240" as="geometry"/>
                 </mxCell>
                 <mxCell id="Rlq6Gaoz2o1WRJl_avST-29" value="- id: int&lt;div&gt;- title: string&lt;br&gt;- description: string&lt;br&gt;- deadline: DateTime&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="Rlq6Gaoz2o1WRJl_avST-28" vertex="1">
                     <mxGeometry y="26" width="270" height="74" as="geometry"/>
@@ -25,8 +25,8 @@
                 <mxCell id="Rlq6Gaoz2o1WRJl_avST-30" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="Rlq6Gaoz2o1WRJl_avST-28" vertex="1">
                     <mxGeometry y="100" width="270" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="Rlq6Gaoz2o1WRJl_avST-31" value="+ addDependency(task: Task): void&lt;br&gt;+ getDependencies(): List&lt;br&gt;+ assignMember(member: TeamMember): void&lt;br&gt;+ getAssignedMembers(): List&amp;lt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;TeamMember&lt;/span&gt;&amp;gt;&lt;br&gt;+ update(title,desc,deadline,ptiority,status): void&lt;br&gt;+ isOverdue(): boolean&lt;br&gt;+ canBeStarted(): boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="Rlq6Gaoz2o1WRJl_avST-28" vertex="1">
-                    <mxGeometry y="108" width="270" height="112" as="geometry"/>
+                <mxCell id="Rlq6Gaoz2o1WRJl_avST-31" value="+ addDependency(parentTask: Task): void&lt;br&gt;+ getParentDependency(): Dependency&lt;div&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;+ getChildDependencies(): List&amp;lt;Dependency&amp;gt;&lt;/span&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;br&gt;&lt;/font&gt;+ assignMember(member: TeamMember): void&lt;br&gt;+ getAssignedMembers(): List&amp;lt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;TeamMember&lt;/span&gt;&amp;gt;&lt;br&gt;+ update/delete()&lt;br&gt;+ isOverdue(): boolean&lt;br&gt;+ canBeCompleted(): boolean&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="Rlq6Gaoz2o1WRJl_avST-28" vertex="1">
+                    <mxGeometry y="108" width="270" height="132" as="geometry"/>
                 </mxCell>
                 <mxCell id="Rlq6Gaoz2o1WRJl_avST-32" value="&amp;lt;&amp;lt;enum&amp;gt;&amp;gt;&lt;br&gt;ProjectStatus" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="160" y="60" width="120" height="100" as="geometry"/>
@@ -80,7 +80,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="Rlq6Gaoz2o1WRJl_avST-73" value="User" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="130" y="585" width="210" height="200" as="geometry"/>
+                    <mxGeometry x="130" y="585" width="210" height="180" as="geometry"/>
                 </mxCell>
                 <mxCell id="Rlq6Gaoz2o1WRJl_avST-74" value="- id: int&lt;br&gt;- firstName: string&lt;br&gt;- lastName: string&lt;br&gt;- email: string&lt;br&gt;&lt;div&gt;- password: string&lt;/div&gt;&lt;div&gt;- registrationDate: DateTime&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="Rlq6Gaoz2o1WRJl_avST-73" vertex="1">
                     <mxGeometry y="26" width="210" height="104" as="geometry"/>
@@ -88,8 +88,8 @@
                 <mxCell id="Rlq6Gaoz2o1WRJl_avST-75" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="Rlq6Gaoz2o1WRJl_avST-73" vertex="1">
                     <mxGeometry y="130" width="210" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="Rlq6Gaoz2o1WRJl_avST-76" value="&lt;div&gt;+ getProjects(): List&amp;lt;Project&amp;gt;&lt;/div&gt;&lt;div&gt;+ getNotification(): List&amp;lt;Notification&amp;gt;&lt;/div&gt;&lt;div&gt;+ updateProfile(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="Rlq6Gaoz2o1WRJl_avST-73" vertex="1">
-                    <mxGeometry y="138" width="210" height="62" as="geometry"/>
+                <mxCell id="Rlq6Gaoz2o1WRJl_avST-76" value="&lt;div&gt;+ getProjects(): List&amp;lt;Project&amp;gt;&lt;/div&gt;&lt;div&gt;+ updateProfile(): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="Rlq6Gaoz2o1WRJl_avST-73" vertex="1">
+                    <mxGeometry y="138" width="210" height="42" as="geometry"/>
                 </mxCell>
                 <mxCell id="Rlq6Gaoz2o1WRJl_avST-77" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;" parent="1" source="Rlq6Gaoz2o1WRJl_avST-28" target="1R44wfxZGqEv1HGcwymp-1" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
@@ -185,12 +185,12 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="15" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;0..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="14" vertex="1" connectable="0">
+                <mxCell id="15" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;0..1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="14" vertex="1" connectable="0">
                     <mxGeometry x="-0.6155" y="1" relative="1" as="geometry">
                         <mxPoint x="-3" y="21" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="16" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;0..*&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="14" vertex="1" connectable="0">
+                <mxCell id="16" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;0..1&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="14" vertex="1" connectable="0">
                     <mxGeometry x="0.8134" y="-1" relative="1" as="geometry">
                         <mxPoint x="2" y="8" as="offset"/>
                     </mxGeometry>
@@ -206,11 +206,34 @@
                 <mxCell id="19" value="LOW&lt;br&gt;NORMAL&lt;br&gt;HIGH" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="18" vertex="1">
                     <mxGeometry y="30" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="Rlq6Gaoz2o1WRJl_avST-28" target="18">
+                <mxCell id="20" value="" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;" parent="1" source="Rlq6Gaoz2o1WRJl_avST-28" target="18" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="-40" y="368" as="sourcePoint"/>
                         <mxPoint x="-160" y="366" as="targetPoint"/>
                     </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="RefreshToken" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="460" y="720" width="160" height="68" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="- token: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="21">
+                    <mxGeometry y="26" width="160" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="21">
+                    <mxGeometry y="60" width="160" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;" edge="1" parent="1" source="21" target="Rlq6Gaoz2o1WRJl_avST-73">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="380" y="660" as="sourcePoint"/>
+                        <mxPoint x="540" y="660" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="27" value="0..1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="25">
+                    <mxGeometry x="-0.6614" y="-2" relative="1" as="geometry">
+                        <mxPoint y="17" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="26" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="360" y="690" width="30" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

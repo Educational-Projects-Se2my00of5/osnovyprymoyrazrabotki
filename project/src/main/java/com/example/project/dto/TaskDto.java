@@ -1,7 +1,8 @@
 package com.example.project.dto;
 
-import com.example.project.entity.enums.TaskStatus;
+import com.example.project.entity.enums.ProjectStatus;
 import com.example.project.entity.enums.TaskPriority;
+import com.example.project.entity.enums.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -44,6 +45,7 @@ public class TaskDto {
         private TaskPriority priority;
         private Long projectId;
         private String projectName;
+        private ProjectStatus projectStatus;
         private List<TeamMemberDto.MemberInfo> assignees;
         private List<DependencyDto.DependencyInfo> dependencies;
         private DependencyDto.ParentTaskInfo parentTask;
@@ -85,6 +87,7 @@ public class TaskDto {
         private TaskPriority priority;
         private Long projectId;
         private String projectName;
+        private ProjectStatus projectStatus;
         private List<TeamMemberDto.MemberInfo> assignees;
         private DependencyDto.ParentTaskInfo parentTask;
     }

@@ -6,7 +6,15 @@ import com.example.project.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -31,22 +39,22 @@ public class TaskController {
     @GetMapping("/api/projects/{projectId}/tasks")
     @ResponseStatus(HttpStatus.OK)
     public List<TaskDto.TaskSummary> getProjectTasks(@RequestHeader("Authorization") String authHeader,
-                                                      @PathVariable("projectId") Long projectId) {
+                                                     @PathVariable("projectId") Long projectId) {
         return taskService.getProjectTasks(authHeader, projectId);
     }
 
     @GetMapping("/api/projects/{projectId}/tasks/my")
     @ResponseStatus(HttpStatus.OK)
     public List<TaskDto.TaskSummary> getMyTasksInProject(@RequestHeader("Authorization") String authHeader,
-                                                          @PathVariable("projectId") Long projectId) {
+                                                         @PathVariable("projectId") Long projectId) {
         return taskService.getMyTasksInProject(authHeader, projectId);
     }
 
     @GetMapping("/api/projects/{projectId}/tasks/member/{memberId}")
     @ResponseStatus(HttpStatus.OK)
     public List<TaskDto.TaskSummary> getMemberTasks(@RequestHeader("Authorization") String authHeader,
-                                                     @PathVariable("projectId") Long projectId,
-                                                     @PathVariable("memberId") Long memberId) {
+                                                    @PathVariable("projectId") Long projectId,
+                                                    @PathVariable("memberId") Long memberId) {
         return taskService.getMemberTasks(authHeader, projectId, memberId);
     }
 
@@ -68,7 +76,7 @@ public class TaskController {
     @GetMapping("/api/projects/{projectId}/members/options")
     @ResponseStatus(HttpStatus.OK)
     public List<TeamMemberDto.MemberInfo> getProjectMembersForTask(@RequestHeader("Authorization") String authHeader,
-                                                                    @PathVariable("projectId") Long projectId) {
+                                                                   @PathVariable("projectId") Long projectId) {
         return taskService.getProjectMembers(authHeader, projectId);
     }
 
@@ -82,7 +90,7 @@ public class TaskController {
     @GetMapping("/api/projects/{projectId}/tasks/options")
     @ResponseStatus(HttpStatus.OK)
     public List<TaskDto.TaskOption> getProjectTasksOptions(@RequestHeader("Authorization") String authHeader,
-                                                            @PathVariable("projectId") Long projectId) {
+                                                           @PathVariable("projectId") Long projectId) {
         return taskService.getProjectTaskOptions(authHeader, projectId);
     }
 
@@ -92,5 +100,12 @@ public class TaskController {
                                           @PathVariable("taskId") Long taskId,
                                           @Valid @RequestBody TaskDto.UpdateRequest request) {
         return taskService.updateTask(authHeader, taskId, request);
+    }
+
+    @DeleteMapping("/api/tasks/{taskId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTask(@RequestHeader("Authorization") String authHeader,
+                          @PathVariable("taskId") Long taskId) {
+        taskService.deleteTask(authHeader, taskId);
     }
 }

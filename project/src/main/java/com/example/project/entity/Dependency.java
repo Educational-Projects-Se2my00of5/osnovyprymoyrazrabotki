@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "dependencies", uniqueConstraints = {
-    @UniqueConstraint(columnNames = "required_task_id")
+        @UniqueConstraint(columnNames = "required_task_id")
 })
 @Data
 @NoArgsConstructor

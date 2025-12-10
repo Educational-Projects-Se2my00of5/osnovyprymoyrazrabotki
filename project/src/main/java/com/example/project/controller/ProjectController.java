@@ -3,7 +3,6 @@ package com.example.project.controller;
 import com.example.project.dto.ProjectDto;
 import com.example.project.dto.UserDto;
 import com.example.project.service.ProjectService;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -53,16 +52,16 @@ public class ProjectController {
     @GetMapping("/{id}/available-users")
     @ResponseStatus(HttpStatus.OK)
     public Page<UserDto.UserInfo> getAvailableUsers(@RequestHeader("Authorization") String authHeader,
-                                                     @PathVariable("id") Long id,
-                                                     @RequestParam(defaultValue = "0") int page,
-                                                     @RequestParam(defaultValue = "20") int size) {
+                                                    @PathVariable("id") Long id,
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "20") int size) {
         return projectService.getAvailableUsers(authHeader, id, page, size);
     }
 
     @GetMapping("/{id}/tasks/stats")
     @ResponseStatus(HttpStatus.OK)
     public ProjectDto.TaskStats getProjectTaskStats(@RequestHeader("Authorization") String authHeader,
-                                                     @PathVariable("id") Long id) {
+                                                    @PathVariable("id") Long id) {
         return projectService.getProjectTaskStats(authHeader, id);
     }
 
@@ -85,24 +84,24 @@ public class ProjectController {
     @DeleteMapping("/{id}/members/{memberId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeMemberFromProject(@RequestHeader("Authorization") String authHeader,
-                                       @PathVariable("id") Long id,
-                                       @PathVariable("memberId") Long memberId) {
+                                        @PathVariable("id") Long id,
+                                        @PathVariable("memberId") Long memberId) {
         projectService.removeMemberFromProject(authHeader, id, memberId);
     }
 
     @PutMapping("/{id}/members/{memberId}/role")
     @ResponseStatus(HttpStatus.OK)
     public void updateMemberRole(@RequestHeader("Authorization") String authHeader,
-                                @PathVariable("id") Long id,
-                                @PathVariable("memberId") Long memberId,
-                                @RequestBody @NotBlank String newRole) {
+                                 @PathVariable("id") Long id,
+                                 @PathVariable("memberId") Long memberId,
+                                 @RequestBody @NotBlank String newRole) {
         projectService.updateMemberRole(authHeader, id, memberId, newRole);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProject(@RequestHeader("Authorization") String authHeader,
-                             @PathVariable("id") Long id) {
+                              @PathVariable("id") Long id) {
         projectService.deleteProject(authHeader, id);
     }
 }

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Use Case Diagram" id="use-case-diagram">
-        <mxGraphModel dx="1942" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1775" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -8,13 +8,13 @@
                     <mxGeometry x="-480" y="374" width="40" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="actor-student" value="Студент" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="370" width="40" height="80" as="geometry"/>
+                    <mxGeometry x="-220" y="374" width="40" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="uc-register" value="Зарегистрироваться" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-660" y="310" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-650" y="360" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="uc-login" value="Войти в систему" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-660" y="390" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-650" y="440" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="2" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-guest" target="uc-login" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
@@ -28,311 +28,123 @@
                         <mxPoint x="40" y="200" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="uc-delete-project" value="Изменить проект" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-10" y="750" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="4" value="Обновить токен" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-650" y="480" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="5" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-guest" target="4" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="80" y="270" as="sourcePoint"/>
-                        <mxPoint x="80" y="320" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="6" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="19" target="uc-delete-project" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="130" y="208" as="sourcePoint"/>
-                        <mxPoint x="-12" y="262" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
                 <mxCell id="7" value="" style="endArrow=block;endSize=16;endFill=0;html=1;" parent="1" source="actor-student" target="actor-guest" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
                         <mxPoint x="10" y="310" as="sourcePoint"/>
                         <mxPoint x="170" y="310" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="uc-view-projects" value="Просмотреть&#xa;список проектов" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-150" y="630" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="10" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-student" target="uc-view-projects" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="50" y="450" as="sourcePoint"/>
-                        <mxPoint x="-31" y="572" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="uc-add-result" value="Изменить задачу" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-170" y="1220.79" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="11" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="76" target="uc-add-result" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="61" y="460" as="sourcePoint"/>
-                        <mxPoint x="26" y="620" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="uc-logout" value="Выйти из системы" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-280" y="470" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="12" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-student" target="uc-logout" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="50" y="443" as="sourcePoint"/>
-                        <mxPoint x="-106" y="622" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="19" value="Просмотреть проект" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-220" y="750" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="21" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="uc-view-projects" target="19" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="76" y="460" as="sourcePoint"/>
-                        <mxPoint x="86" y="530" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="23" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="uc-add-result" target="25" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="157.82" y="936.79" as="sourcePoint"/>
-                        <mxPoint x="247.82" y="963.79" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="24" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="uc-add-result" target="26" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="177.82" y="853.79" as="sourcePoint"/>
-                        <mxPoint x="-339.52929147740656" y="1324.5672722605948" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="25" value="Изменить статус/дедлайн/приоритет" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-280" y="1320.79" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="26" value="Добавить/удалить ответственных" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-450" y="1300" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="28" value="Установить зависимость с другой задачей" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-80" y="1393.79" width="120" height="67" as="geometry"/>
-                </mxCell>
-                <mxCell id="30" value="Создать задачу" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="140" y="1030" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="31" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="19" target="30" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="90" y="1010" as="sourcePoint"/>
-                        <mxPoint x="26" y="843" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="32" value="Удалить задачу" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-30" y="1060" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="33" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="76" target="32" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="205" y="699" as="sourcePoint"/>
-                        <mxPoint x="275" y="838" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="38" value="Студент может просматривать список проектов и конкретные, в которых является участником" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=9;verticalAlign=top;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="160" y="330" width="150" height="110" as="geometry"/>
-                </mxCell>
-                <mxCell id="39" value="" style="endArrow=none;dashed=1;html=1;" parent="1" source="actor-student" target="38" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="280" y="610" as="sourcePoint"/>
-                        <mxPoint x="330" y="560" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="40" value="Удалить проект" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="640" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="42" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="19" target="40" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="166" y="414" as="sourcePoint"/>
-                        <mxPoint x="380" y="636" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="43" value="Добавить участника" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-540" y="780" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="44" value="В проектах все являются админами" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=9;verticalAlign=top;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="-40" y="170" width="100" height="70" as="geometry"/>
+                <mxCell id="44" value="В проектах все пользователи имеют полный доступ к функционалу" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=9;verticalAlign=top;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="-270" y="240" width="140" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="45" value="" style="endArrow=none;dashed=1;html=1;" parent="1" source="actor-student" target="44" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="90" y="420" as="sourcePoint"/>
-                        <mxPoint x="150" y="420" as="targetPoint"/>
+                        <mxPoint x="-180" y="890" as="sourcePoint"/>
+                        <mxPoint x="-120" y="890" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="49" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="19" target="43" edge="1">
+                <mxCell id="98" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-student" target="99" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-529.9976199376459" y="1016.1277019412746" as="sourcePoint"/>
-                        <mxPoint x="-326.59000000000003" y="883" as="targetPoint"/>
+                        <mxPoint x="-240" y="662" as="sourcePoint"/>
+                        <mxPoint x="-240" y="580" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="50" value="Создать проект" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="85" y="550" width="120" height="60" as="geometry"/>
+                <mxCell id="99" value="Редактировать проект" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="-330" y="580" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="51" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-student" target="50" edge="1">
+                <mxCell id="100" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-student" target="101" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="90" y="441" as="sourcePoint"/>
-                        <mxPoint x="304" y="663" as="targetPoint"/>
+                        <mxPoint x="-53" y="480" as="sourcePoint"/>
+                        <mxPoint x="-80" y="590" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="53" value="Изменить статус" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="125" y="840" width="120" height="60" as="geometry"/>
+                <mxCell id="101" value="Просмотреть проект" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="-190" y="580" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="55" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="uc-delete-project" target="53" edge="1">
+                <mxCell id="102" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-student" target="103" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="308" y="718" as="sourcePoint"/>
-                        <mxPoint x="272" y="762" as="targetPoint"/>
+                        <mxPoint x="-175" y="470" as="sourcePoint"/>
+                        <mxPoint x="50" y="540" as="targetPoint"/>
+                        <Array as="points"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="56" value="Разорвать зависимость с другой задачей" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="90" y="1380.79" width="150" height="90" as="geometry"/>
+                <mxCell id="103" value="Просмотреть статистику задач" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="-60" y="290" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="59" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;" parent="1" source="56" target="32" edge="1">
+                <mxCell id="104" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-student" target="105" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="457" y="1316.79" as="sourcePoint"/>
-                        <mxPoint x="63.66617620625493" y="1210.0014516408703" as="targetPoint"/>
+                        <mxPoint x="-160" y="469.99723007347643" as="sourcePoint"/>
+                        <mxPoint x="110" y="649.52" as="targetPoint"/>
+                        <Array as="points"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="60" value="Просмотреть список участников&amp;nbsp;" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-460" y="860" width="120" height="60" as="geometry"/>
+                <mxCell id="105" value="Просмотреть список задач" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="-50" y="374" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="61" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="19" target="60" edge="1">
+                <mxCell id="108" value="Просмотреть задачу" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="-70" y="530" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="110" value="Изменить задачу" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="610" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="111" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;" parent="1" source="110" target="108" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-209.99691476588367" y="749.9968041333815" as="sourcePoint"/>
-                        <mxPoint x="-196.18" y="571.35" as="targetPoint"/>
+                        <mxPoint x="35" y="813" as="sourcePoint"/>
+                        <mxPoint x="-160" y="720" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="62" value="Просмотреть участника" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-500" y="960" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="63" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="60" target="62" edge="1">
+                <mxCell id="112" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;" parent="1" source="114" target="110" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-210.00322657758244" y="799.999697296066" as="sourcePoint"/>
-                        <mxPoint x="-313.05" y="638.94" as="targetPoint"/>
+                        <mxPoint x="-20" y="876" as="sourcePoint"/>
+                        <mxPoint x="-40" y="820" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="64" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="62" target="65" edge="1">
+                <mxCell id="113" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;" parent="1" source="115" target="110" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-486" y="1150" as="sourcePoint"/>
-                        <mxPoint x="-430" y="1130" as="targetPoint"/>
+                        <mxPoint x="80" y="840" as="sourcePoint"/>
+                        <mxPoint x="-2" y="790" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="65" value="Просмотреть список задач участника" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="-610" y="1040" width="130" height="70" as="geometry"/>
+                <mxCell id="114" value="Добавить/удалить ответственных" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="720" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="68" value="Изменить роль(суффикс к имени) участника" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-690" y="950" width="120" height="60" as="geometry"/>
+                <mxCell id="115" value="Добавить/удалить родительскую задачу" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry y="720" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="69" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="62" target="68" edge="1">
+                <mxCell id="116" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-student" target="108" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-195" y="810" as="sourcePoint"/>
-                        <mxPoint x="-445" y="920" as="targetPoint"/>
+                        <mxPoint x="-175" y="443" as="sourcePoint"/>
+                        <mxPoint x="62" y="473" as="targetPoint"/>
+                        <Array as="points"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="70" value="Просмотреть диаграмму Ганта" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-510" y="680" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="71" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="19" target="70" edge="1">
+                <mxCell id="121" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="actor-student" target="122" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-195" y="810" as="sourcePoint"/>
-                        <mxPoint x="-445" y="920" as="targetPoint"/>
+                        <mxPoint x="-165" y="519" as="sourcePoint"/>
+                        <mxPoint x="130" y="739.52" as="targetPoint"/>
+                        <Array as="points"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="72" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="30" target="28" edge="1">
+                <mxCell id="122" value="Создать задачу" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="-40" y="450" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="124" value="Просмотреть диаграмму ганта" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="-150" y="720" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="125" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;" parent="1" source="124" target="101" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="119" y="1150" as="sourcePoint"/>
-                        <mxPoint x="301" y="1283" as="targetPoint"/>
+                        <mxPoint x="290" y="590" as="sourcePoint"/>
+                        <mxPoint x="190" y="590" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="73" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="30" target="56" edge="1">
+                <mxCell id="126" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" edge="1" parent="1" target="127" source="actor-student">
                     <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="210" y="1153" as="sourcePoint"/>
-                        <mxPoint x="181" y="1234" as="targetPoint"/>
+                        <mxPoint x="-274" y="374" as="sourcePoint"/>
+                        <mxPoint x="-300" y="500" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="74" value="Просмотреть список задач проекта" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="-230" y="900" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="75" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="19" target="74" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-155" y="820" as="sourcePoint"/>
-                        <mxPoint x="-207" y="1153" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="76" value="Просмотреть задачу" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="-240" y="1110" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="79" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="uc-add-result" target="28" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="230" y="1243.79" as="sourcePoint"/>
-                        <mxPoint x="201" y="1324.79" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="80" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" parent="1" source="uc-add-result" target="56" edge="1">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="16" y="1236.79" as="sourcePoint"/>
-                        <mxPoint x="-6" y="1403.79" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="82" value="При COMPLETED и ARCHIVED нельзя менять проект, задачи в нём" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=center;" vertex="1" parent="1">
-                    <mxGeometry x="290" y="827" width="160" height="86" as="geometry"/>
-                </mxCell>
-                <mxCell id="83" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1" source="53" target="82">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="220" y="830" as="sourcePoint"/>
-                        <mxPoint x="270" y="780" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="84" value="Удалить участника" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
-                    <mxGeometry x="-670" y="853" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="85" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" edge="1" parent="1" source="60" target="84">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-199" y="773" as="sourcePoint"/>
-                        <mxPoint x="-351" y="718" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="86" value="Изменить профиль" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
-                    <mxGeometry x="240" y="520" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="87" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" edge="1" parent="1" source="actor-student" target="86">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="90" y="460" as="sourcePoint"/>
-                        <mxPoint x="140" y="561" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="88" value="Просмотреть список своих задач" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-                    <mxGeometry x="-190" y="540" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="89" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" edge="1" parent="1" source="actor-student" target="88">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="90" y="460" as="sourcePoint"/>
-                        <mxPoint x="140" y="561" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="90" value="Просмотреть список своих задач в проекте" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-                    <mxGeometry x="-100" y="940" width="130" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="91" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" edge="1" parent="1" source="19" target="90">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-152" y="820" as="sourcePoint"/>
-                        <mxPoint x="-158" y="910" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="92" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-                    <mxGeometry x="-270" y="1010" width="70" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="93" value="" style="endArrow=open;endFill=1;endSize=12;html=1;" edge="1" parent="1" source="92" target="76">
-                    <mxGeometry width="160" relative="1" as="geometry">
-                        <mxPoint x="-152" y="820" as="sourcePoint"/>
-                        <mxPoint x="-158" y="910" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="94" value="В сценарий &quot;Просмотреть задачу&quot; можно попасть из любого жёлтого сценария" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=12;verticalAlign=top;align=center;" vertex="1" parent="1">
-                    <mxGeometry x="-440" y="1090" width="160" height="73" as="geometry"/>
-                </mxCell>
-                <mxCell id="95" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1" source="94" target="92">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="-440" y="1260" as="sourcePoint"/>
-                        <mxPoint x="-390" y="1210" as="targetPoint"/>
-                    </mxGeometry>
+                <mxCell id="127" value="Создать проект" style="ellipse;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="-390" y="500" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

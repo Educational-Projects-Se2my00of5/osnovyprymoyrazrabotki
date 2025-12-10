@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getStatusLabel } from '../utils/taskUtils';
 import './MemberDetailsModal.css';
 
-function MemberDetailsModal({ projectId, member, onClose, onRoleUpdated }) {
+function MemberDetailsModal({ projectId, projectStatus, member, onClose, onRoleUpdated }) {
   const navigate = useNavigate();
   const [role, setRole] = useState(member.role || '');
   const [tasks, setTasks] = useState([]);
@@ -13,6 +13,11 @@ function MemberDetailsModal({ projectId, member, onClose, onRoleUpdated }) {
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+
+  // Проверка статуса проекта
+  const isProjectCompleted = projectStatus === 'COMPLETED';
+  const isProjectArchived = projectStatus === 'ARCHIVED';
+  const canEditRole = !isProjectCompleted && !isProjectArchived;
 
   useEffect(() => {
     const loadTasks = async () => {
@@ -65,22 +70,26 @@ function MemberDetailsModal({ projectId, member, onClose, onRoleUpdated }) {
           {/* Role edit */}
           <div className="modal-input-group">
             <label className="modal-label">Роль</label>
-            <div className="member-role-input-group">
-              <input
-                type="text"
-                className="modal-input"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                placeholder="Введите роль..."
-              />
-              <button 
-                onClick={handleSaveRole} 
-                className="modal-button"
-                disabled={saving}
-              >
-                {saving ? 'Сохранение...' : 'Сохранить'}
-              </button>
-            </div>
+            {canEditRole ? (
+              <div className="member-role-input-group">
+                <input
+                  type="text"
+                  className="modal-input"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  placeholder="Введите роль..."
+                />
+                <button 
+                  onClick={handleSaveRole} 
+                  className="modal-button"
+                  disabled={saving}
+                >
+                  {saving ? 'Сохранение...' : 'Сохранить'}
+                </button>
+              </div>
+            ) : (
+              <div className="modal-input">{role || 'Роль не указана'}</div>
+            )}
           </div>
 
           {successMessage && (
