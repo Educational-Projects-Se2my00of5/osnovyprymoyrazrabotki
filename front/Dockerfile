@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:25-alpine
 
 WORKDIR /app
 
@@ -8,6 +8,6 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-EXPOSE 3000
-
 CMD ["npm", "start"]
+
+EXPOSE 3000
