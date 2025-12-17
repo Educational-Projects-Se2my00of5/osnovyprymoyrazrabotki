@@ -13,6 +13,16 @@ FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
+# Объявляем переменные окружения
+ARG DATABASE_URL
+ARG FRONTEND_URL
+ARG SPRING_PROFILES_ACTIVE
+
+ENV DATABASE_URL=$DATABASE_URL
+ENV FRONTEND_URL=$FRONTEND_URL
+ENV SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
+ENV PORT=8080
+
 # Находим и копируем единственный исполняемый jar
 COPY --from=build /app/build/libs/*.jar app.jar
 

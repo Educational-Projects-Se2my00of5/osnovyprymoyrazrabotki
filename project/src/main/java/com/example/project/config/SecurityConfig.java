@@ -26,10 +26,14 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(request -> {
                     var config = new org.springframework.web.cors.CorsConfiguration();
                     // Паттерны для разработки (любой порт на localhost) и продакшн домен
-                    config.setAllowedOriginPatterns(java.util.Arrays.asList(
-                            "http://localhost:*",                       // локальная разработка (любой порт)
-                            "http://127.0.0.1:*"                       // локальная разработка (любой порт)
-                    ));
+                    String frontendUrl = System.getenv("FRONTEND_URL");
+                    java.util.List<String> allowedOrigins = new java.util.ArrayList<>();
+                    allowedOrigins.add("http://localhost:*");
+                    allowedOrigins.add("http://127.0.0.1:*");
+                    if (frontendUrl != null && !frontendUrl.isEmpty()) {
+                        allowedOrigins.add(frontendUrl);
+                    }
+                    config.setAllowedOriginPatterns(allowedOrigins);
                     config.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(java.util.Arrays.asList("*"));
                     config.setAllowCredentials(true);
