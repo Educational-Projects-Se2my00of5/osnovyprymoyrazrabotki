@@ -1,17 +1,23 @@
 services:
-  # front:
-  #   build: ./front
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./front:/app      # монтируем код для hot-reload
-  #     - /app/node_modules     # чтобы node_modules не затирался
-  #   environment:
-  #     - REACT_APP_API_URL=http://host.docker.internal:8080
-  #     - CHOKIDAR_USEPOLLING=true  # полезно для hot reload внутри Docker
-  #   stdin_open: true
-  #   tty: true
+  frontend:
+    build: ./front
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080/api
+    depends_on:
+      - backend
 
+  backend:
+    build: ./project
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgresql://postgres_project_db:5432/project-db
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+    depends_on:
+      - postgres_project_db
 
   postgres_project_db:
     image: postgres:17-alpine3.22
