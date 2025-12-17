@@ -5,6 +5,4 @@ dockerContext = "."
 
 [deploy]
 startCommand = ""
-healthcheckPath = "/"
-healthcheckTimeout = 100
 restartPolicyType = "on_failure"
