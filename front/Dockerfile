@@ -12,6 +12,12 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-CMD ["npm", "start"]
+# Production build вместо dev сервера
+RUN npm run build
+
+# Используем serve для production
+RUN npm install -g serve
 
 EXPOSE 3000
+
+CMD ["serve", "-s", "build", "-l", "3000"]
