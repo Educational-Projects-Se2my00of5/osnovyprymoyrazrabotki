@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { clearAuth, getAccessToken, getRefreshToken, setAuthTokens } from './api/storage';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+const API_URL = process.env.REACT_APP_API_URL+"/api" || 'http://localhost:8080/api';
 
 // Основной клиент для всех запросов
 export const apiClient = axios.create({ baseURL: API_URL });
