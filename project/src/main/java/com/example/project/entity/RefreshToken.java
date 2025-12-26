@@ -19,13 +19,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class RefreshToken {
-
     @Id
-    @Column(nullable = false, unique = true)
+    Long id;
+
+    @Column(nullable = false)
     private String token;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
 }
