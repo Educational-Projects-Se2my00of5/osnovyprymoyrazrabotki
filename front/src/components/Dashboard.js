@@ -20,7 +20,7 @@ function Dashboard({ onLogout }) {
   const [taskStatsLoading, setTaskStatsLoading] = useState(true);
   const [taskStatsError, setTaskStatsError] = useState('');
 
-  const [newProject, setNewProject] = useState({ name: '', description: '', subjectName: '' });
+  const [newProject, setNewProject] = useState({ name: '', description: '', subjectName: '', deadline: '' });
   const [createMessage, setCreateMessage] = useState({ type: '', text: '' });
 
   useEffect(() => {
@@ -76,10 +76,16 @@ function Dashboard({ onLogout }) {
         setCreateMessage({ type: 'error', text: 'Предмет проекта обязателен' });
         return;
       }
+      if (!newProject.deadline) {
+        setCreateMessage({ type: 'error', text: 'Дедлайн проекта обязателен' });
+        return;
+      }
       try {
-        const created = await createProject(newProject.name, newProject.description, newProject.subjectName);
+        const deadlineDate = new Date(newProject.deadline);
+        deadlineDate.setHours(23, 59, 59, 999);
+        const created = await createProject(newProject.name, newProject.description, newProject.subjectName, deadlineDate.toISOString());
         setCreateMessage({ type: 'success', text: `Создан проект: ${created.name || newProject.name}` });
-        setNewProject({ name: '', description: '', subjectName: '' });
+        setNewProject({ name: '', description: '', subjectName: '', deadline: '' });
         // Обновляем список проектов
         const list = await getProjects();
         setProjects(list || []);
@@ -297,6 +303,16 @@ function Dashboard({ onLogout }) {
                   className="dashboard-textarea"
                   placeholder="Краткое описание проекта"
                   rows={3}
+                />
+              </div>
+              <div className="dashboard-input-group">
+                <label className="dashboard-label-form">Дедлайн проекта:</label>
+                <input
+                  type="date"
+                  value={newProject.deadline}
+                  onChange={(e) => setNewProject({ ...newProject, deadline: e.target.value })}
+                  required
+                  className="dashboard-input"
                 />
               </div>
               <button type="submit" className="dashboard-create-button">

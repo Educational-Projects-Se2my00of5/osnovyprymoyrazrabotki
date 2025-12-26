@@ -8,6 +8,7 @@ function EditProjectModal({ project, onClose, onSave }) {
   const [description, setDescription] = useState(project.description || '');
   const [status, setStatus] = useState(project.status || 'PLANNING');
   const [subjectName, setSubjectName] = useState(project.subjectName || '');
+  const [deadline, setDeadline] = useState(project.deadline ? project.deadline.substring(0, 10) : '');
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
 
@@ -37,16 +38,23 @@ function EditProjectModal({ project, onClose, onSave }) {
       setError('Необходимо выбрать статус');
       return;
     }
+    if (!deadline) {
+      setError('Дедлайн проекта обязателен');
+      return;
+    }
 
     setSaving(true);
     setError('');
     try {
+      const deadlineDate = new Date(deadline);
+      deadlineDate.setHours(23, 59, 59, 999);
       const updated = await updateProject(
         project.id,
         name.trim(),
         description,
         subjectName.trim(),
-        status
+        status,
+        deadlineDate.toISOString()
       );
       onSave(updated);
     } catch (err) {
@@ -116,6 +124,17 @@ function EditProjectModal({ project, onClose, onSave }) {
                 </option>
               ))}
             </select>
+          </div>
+          <div className="modal-input-group">
+            <label className="modal-label">Дедлайн проекта *</label>
+            <input
+              type="date"
+              className="modal-input"
+              value={deadline}
+              onChange={(e) => setDeadline(e.target.value)}
+              required
+              disabled={isArchived}
+            />
           </div>
           {error && <p className="modal-error">{error}</p>}
           <div className="modal-buttons">

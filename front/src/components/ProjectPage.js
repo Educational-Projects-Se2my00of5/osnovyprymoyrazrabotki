@@ -249,7 +249,13 @@ function ProjectPage() {
               <div className="project-info-row">
                 <span className="project-label">Создан:</span>
                 <span className="project-value">
-                  {project.createdAt ? new Date(project.createdAt).toLocaleString('ru-RU') : '—'}
+                  {project.createdAt ? new Date(project.createdAt).toLocaleDateString('ru-RU') : '—'}
+                </span>
+              </div>
+              <div className="project-info-row">
+                <span className="project-label">Дедлайн:</span>
+                <span className="project-value">
+                  {project.deadline ? new Date(project.deadline).toLocaleDateString('ru-RU') : '—'}
                 </span>
               </div>
             </div>

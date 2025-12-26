@@ -45,6 +45,9 @@ public class Project {
     @Column(nullable = false)
     private LocalDateTime createdDate;
 
+    @Column(nullable = true) // для обратной совместимости
+    private LocalDateTime deadline;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProjectStatus status;

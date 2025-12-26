@@ -71,6 +71,7 @@ public class ProjectService {
                 .name(req.getName())
                 .description(req.getDescription())
                 .subjectName(req.getSubjectName())
+                .deadline(req.getDeadline())
                 .build();
 
         var saved = projectRepository.save(project);
@@ -91,6 +92,7 @@ public class ProjectService {
                 .status(saved.getStatus().name())
                 .role(member.getRole())
                 .createdAt(saved.getCreatedDate())
+                .deadline(saved.getDeadline())
                 .build();
     }
 
@@ -125,6 +127,7 @@ public class ProjectService {
                 .subjectName(project.getSubjectName())
                 .status(project.getStatus() != null ? project.getStatus().name() : null)
                 .createdAt(project.getCreatedDate())
+                .deadline(project.getDeadline())
                 .members(members)
                 .myRole(myRole)
                 .build();
@@ -255,6 +258,7 @@ public class ProjectService {
         project.setName(req.getName());
         project.setDescription(req.getDescription());
         project.setSubjectName(req.getSubjectName());
+        project.setDeadline(req.getDeadline());
         project.setStatus(newStatus);
         projectRepository.save(project);
 

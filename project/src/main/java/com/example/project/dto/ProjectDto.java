@@ -24,6 +24,7 @@ public class ProjectDto {
         private String status;
         private String role;
         private LocalDateTime createdAt;
+        private LocalDateTime deadline;
     }
 
     @Data
@@ -49,6 +50,7 @@ public class ProjectDto {
         private String subjectName;
         private String status;
         private LocalDateTime createdAt;
+        private LocalDateTime deadline;
         private List<TeamMemberInfo> members;
         private String myRole;
     }
@@ -68,6 +70,9 @@ public class ProjectDto {
         @NotBlank(message = "Предмет обязателен")
         @Size(min = 2, max = 255, message = "Предмет от 2 до 255 символов")
         private String subjectName;
+
+        @NotNull(message = "Дедлайн проекта обязателен")
+        private LocalDateTime deadline;
     }
 
     @Data
@@ -88,6 +93,9 @@ public class ProjectDto {
 
         @NotBlank(message = "Статус обязателен")
         private String status;
+
+        @NotNull(message = "Дедлайн проекта обязателен")
+        private LocalDateTime deadline;
     }
 
     @Data

@@ -1,10 +1,10 @@
 // DTO-фабрики для запросов и ответов, связанных с проектами
-export function CreateProjectDto(name, description, subjectName) {
-    return { name, description, subjectName };
+export function CreateProjectDto(name, description, subjectName, deadline) {
+    return { name, description, subjectName, deadline };
 }
 
-export function UpdateProjectDto(name, description, subjectName, status) {
-    return { name, description, subjectName, status };
+export function UpdateProjectDto(name, description, subjectName, status, deadline) {
+    return { name, description, subjectName, status, deadline };
 }
 
 export function AddMemberDto(userId, role) {
@@ -20,6 +20,7 @@ export function ProjectSummaryDto(data) {
         status: data.status,
         role: data.role,
         createdAt: data.createdAt,
+        deadline: data.deadline,
     };
 }
 
@@ -43,6 +44,7 @@ export function ProjectDetailsDto(data) {
         subjectName: data.subjectName,
         status: data.status,
         createdAt: data.createdAt,
+        deadline: data.deadline,
         members: Array.isArray(data.members) ? data.members.map(TeamMemberInfoDto) : [],
         myRole: data.myRole,
     };

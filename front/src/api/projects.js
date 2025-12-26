@@ -20,9 +20,9 @@ export async function getProjects() {
     }
 }
 
-export async function createProject(name, description, subjectName) {
+export async function createProject(name, description, subjectName, deadline) {
     try {
-        const payload = CreateProjectDto(name, description, subjectName);
+        const payload = CreateProjectDto(name, description, subjectName, deadline);
         const resp = await apiClient.post('/projects', payload);
         return ProjectSummaryDto(resp.data);
     } catch (err) {
@@ -42,9 +42,9 @@ export async function getProject(id) {
     }
 }
 
-export async function updateProject(id, name, description, subjectName, status) {
+export async function updateProject(id, name, description, subjectName, status, deadline) {
     try {
-        const payload = UpdateProjectDto(name, description, subjectName, status);
+        const payload = UpdateProjectDto(name, description, subjectName, status, deadline);
         const resp = await apiClient.put(`/projects/${id}`, payload);
         return ProjectDetailsDto(resp.data);
     } catch (err) {
