@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,6 +92,14 @@ public class TaskService {
     public TaskDto.CreateResponse createTask(String authHeader, Long projectId, TaskDto.CreateRequest request) {
         Project project = verifyProjectAccessAndGet(authHeader, projectId);
 
+        // Проверяем дедлайн задачи не позже дедлайна проекта
+        if (project.getDeadline() != null && request.getDeadline().isAfter(project.getDeadline())) {
+            throw new BadRequestException(
+                "Дедлайн задачи не может быть позже дедлайна проекта ("
+                + project.getDeadline().format(DateTimeFormatter.ISO_DATE) + ")"
+            );
+        }
+
         // Создаём задачу
         Task task = Task.builder()
                 .title(request.getTitle())
@@ -121,6 +130,8 @@ public class TaskService {
         if (request.getParentTaskId() != null) {
             Task parentTask = taskRepository.findById(request.getParentTaskId())
                     .orElseThrow(() -> new NotFoundException("Родительская задача не найдена"));
+            // Валидируем зависимость (включая дедлайны)
+            dependencyService.validateDependency(saved, parentTask);
             parentTaskInfo = dependencyService.createDependency(saved, parentTask);
         }
 
@@ -177,7 +188,15 @@ public class TaskService {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new NotFoundException("Задача не найдена"));
 
-        verifyProjectAccessAndGet(authHeader, task.getProject().getId());
+        Project project = verifyProjectAccessAndGet(authHeader, task.getProject().getId());
+
+        // Проверяем дедлайн задачи не позже дедлайна проекта
+        if (project.getDeadline() != null && request.getDeadline().isAfter(project.getDeadline())) {
+            throw new BadRequestException(
+                "Дедлайн задачи не может быть позже дедлайна проекта ("
+                + project.getDeadline().format(DateTimeFormatter.ISO_DATE) + ")"
+            );
+        }
 
         // Проверка изменения статуса с учётом зависимостей
         TaskStatus newStatus = request.getStatus();

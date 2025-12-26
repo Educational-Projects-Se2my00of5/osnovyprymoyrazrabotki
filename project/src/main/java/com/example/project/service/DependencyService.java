@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +56,14 @@ public class DependencyService {
         // Родительская задача не может быть завершена, если дочерняя не завершена
         if (parentTask.getStatus() == TaskStatus.COMPLETED && task.getStatus() != TaskStatus.COMPLETED) {
             throw new BadRequestException("Родительская задача не может быть завершена, пока дочерняя задача не завершена");
+        }
+
+        // Проверка дедлайна с конкретным родителем
+        if (toLocalDate(task.getDeadline()).isAfter(toLocalDate(parentTask.getDeadline()))) {
+            throw new BadRequestException(
+                "Дедлайн дочерней задачи не может быть позже дедлайна родительской задачи ("
+                + parentTask.getTitle() + ", " + parentTask.getDeadline().format(DateTimeFormatter.ISO_DATE) + ")"
+            );
         }
 
         validateTaskDeadlineUpdate(task);
@@ -130,7 +139,8 @@ public class DependencyService {
         Optional<Dependency> parentDep = dependencyRepository.findByRequiredTask(task);
         if (parentDep.isPresent()) {
             Task parent = parentDep.get().getDependentTask();
-            if (task.getDeadline().isAfter(parent.getDeadline())) {
+            // Сравниваем только даты, без времени
+            if (toLocalDate(task.getDeadline()).isAfter(toLocalDate(parent.getDeadline()))) {
                 throw new BadRequestException(
                     "Дедлайн дочерней задачи не может быть позже дедлайна родительской задачи ("
                     + parent.getTitle() + ", " + parent.getDeadline().format(DateTimeFormatter.ISO_DATE) + ")"
@@ -142,13 +152,21 @@ public class DependencyService {
         List<Dependency> childDeps = dependencyRepository.findByDependentTask(task);
         for (Dependency dep : childDeps) {
             Task child = dep.getRequiredTask();
-            if (task.getDeadline().isBefore(child.getDeadline())) {
+            // Сравниваем только даты, без времени
+            if (toLocalDate(task.getDeadline()).isBefore(toLocalDate(child.getDeadline()))) {
                 throw new BadRequestException(
                     "Дедлайн родительской задачи не может быть раньше дедлайна дочерней задачи ("
                         + child.getTitle() + ", " + child.getDeadline().format(DateTimeFormatter.ISO_DATE) + ")"
                 );
             }
         }
+    }
+    
+    /**
+     * Преобразует LocalDateTime в LocalDate (удаляет время)
+     */
+    private java.time.LocalDate toLocalDate(LocalDateTime dateTime) {
+        return dateTime.toLocalDate();
     }
     
 

@@ -285,7 +285,7 @@ function TaskDetailsPage() {
               <div className="task-details-info-row">
                 <span className="task-details-label">Дедлайн:</span>
                 <span className={`task-details-value ${isTaskOverdue(task) ? 'task-details-overdue' : ''}`}>
-                  {task.deadline ? new Date(task.deadline).toLocaleString('ru-RU') : '—'}
+                  {task.deadline ? new Date(task.deadline).toLocaleDateString('ru-RU') : '—'}
                   {isTaskOverdue(task) && <span className="task-details-overdue-badge"> Просрочено</span>}
                 </span>
               </div>
