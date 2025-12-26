@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Table(name = "refresh_tokens")
@@ -20,10 +21,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RefreshToken {
     @Id
-    Long id;
+    private Long id;
 
     @Column(nullable = false)
-    private String token;
+    private   String token;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

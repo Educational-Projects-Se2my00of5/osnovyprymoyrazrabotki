@@ -51,7 +51,10 @@ public class AuthService {
         refreshTokenRepository.deleteByUser(user);
 
         String accessToken = jwtService.generateAccessToken(user);
-        RefreshToken refreshToken = new RefreshToken(jwtService.generateRefreshToken(user), user);
+        RefreshToken refreshToken = RefreshToken.builder()
+                .user(user)
+                .token(jwtService.generateRefreshToken(user))
+                .build();
         refreshTokenRepository.save(refreshToken);
 
         return AuthDto.BothTokensResponse.builder()
