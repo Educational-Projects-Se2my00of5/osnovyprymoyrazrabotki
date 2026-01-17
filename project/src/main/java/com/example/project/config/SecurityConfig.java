@@ -1,6 +1,8 @@
 package com.example.project.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -27,11 +30,14 @@ public class SecurityConfig {
                     var config = new org.springframework.web.cors.CorsConfiguration();
                     // Паттерны для разработки (любой порт на localhost) и продакшн домен
                     String frontendUrl = System.getenv("FRONTEND_URL");
+                    
                     java.util.List<String> allowedOrigins = new java.util.ArrayList<>();
                     allowedOrigins.add("http://localhost:*");
                     allowedOrigins.add("http://127.0.0.1:*");
                     if (frontendUrl != null && !frontendUrl.isEmpty()) {
-                        allowedOrigins.add(frontendUrl+":*");
+                        allowedOrigins.add(frontendUrl);
+                    } else {
+                        log.info("продакшен домен не задан");
                     }
                     config.setAllowedOriginPatterns(allowedOrigins);
                     config.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
