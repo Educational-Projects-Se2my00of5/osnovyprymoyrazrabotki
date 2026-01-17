@@ -19,8 +19,14 @@ jobs:
           DEPLOY_DIR="${BASE_DIR}/${PROJECT_NAME}"
 
           mkdir -p "${DEPLOY_DIR}"
-          rm -rf "${DEPLOY_DIR:?}/"*
-          cp -a . "${DEPLOY_DIR}/"
+          rsync -av --progress \
+          --exclude='.git' \
+          --exclude='node_modules' \
+          --exclude='.gradle' \
+          --exclude='build' \
+          --exclude='frontend/dist' \
+          --exclude='frontend/node_modules' \
+          . "${DEPLOY_DIR}/"
 
           cp "${BASE_DIR}/.env" "${DEPLOY_DIR}/.env"
 
