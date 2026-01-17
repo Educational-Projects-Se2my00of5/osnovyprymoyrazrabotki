@@ -31,7 +31,7 @@ public class SecurityConfig {
                     allowedOrigins.add("http://localhost:*");
                     allowedOrigins.add("http://127.0.0.1:*");
                     if (frontendUrl != null && !frontendUrl.isEmpty()) {
-                        allowedOrigins.add(frontendUrl);
+                        allowedOrigins.add(frontendUrl+":*");
                     }
                     config.setAllowedOriginPatterns(allowedOrigins);
                     config.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
