@@ -4,7 +4,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - REACT_APP_API_URL=http://project_backend:8080/api
+      - REACT_APP_API_URL=${BACKEND_URL}
     depends_on:
       - backend
 
@@ -17,6 +17,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_project_db:5432/project-db
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=admin
+      - FRONTEND_URL=${FRONTEND_URL}
     depends_on:
       - postgres_project_db
 

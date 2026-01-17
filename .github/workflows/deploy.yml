@@ -1,0 +1,36 @@
+name: Deploy (VPS)
+
+on:
+  push:
+    branches: [ prod ]
+
+jobs:
+  deploy:
+
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+
+      - name: Deploy via docker compose
+        shell: bash
+        run: |
+          BASE_DIR="/home/user"
+          PROJECT_NAME="${{ github.event.repository.name }}"
+          DEPLOY_DIR="${BASE_DIR}/${PROJECT_NAME}"
+
+          mkdir -p "${DEPLOY_DIR}"
+          rm -rf "${DEPLOY_DIR:?}/"*
+          cp -a . "${DEPLOY_DIR}/"
+
+          cp "${BASE_DIR}/.env" "${DEPLOY_DIR}/.env"
+
+          cd "${DEPLOY_DIR}"
+          docker compose up -d --build --remove-orphans
+        shell: bash
+      - name: Show running containers
+        shell: bash
+        run: |
+          docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
